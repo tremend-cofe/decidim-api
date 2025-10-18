@@ -1,5 +1,56 @@
 = Proposals
 
+== Creating Proposals
+
+The `CreateProposal` mutation allows authenticated users to create new proposals in a Decidim proposals component. This mutation uses the existing `CreateProposal` command from the controller.
+```graphql
+mutation {
+  component(id: "123") {
+    ... on ProposalsMutation {
+      createProposal(input: {
+        attributes: {
+          title: "Install Bike Lanes on Main Street",
+          body: "We propose adding dedicated bike lanes along Main Street to improve cyclist safety and encourage sustainable transportation.",
+          address: "Main Street, Barcelona, Spain",
+          latitude: 41.3851,
+          longitude: 2.1734,
+          "taxonomies": [123, 456]
+        }
+      }) {
+        id
+        title {
+          translation(locale: "en")
+        }
+        address
+        coordinates {
+          latitude
+          longitude
+        }
+      }
+    }
+  }
+}
+```
+
+
+=== Error Handling
+
+==== Validation Errors
+
+If the input fails validation, you will receive an error response:
+
+```json
+{
+  "data": {
+    "createProposal": null
+  },
+  "errors": [
+    {
+      "message": "Title is too short (minimum is 15 characters), Body is too short (minimum is 15 characters)"
+    }
+  ]
+}
+```
 == Answering Proposals
 
 Allows administrators to answer proposals with a status (accepted, rejected, or evaluating).

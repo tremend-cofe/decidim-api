@@ -9,6 +9,8 @@ module Decidim
         argument :id, GraphQL::Types::ID, "The ID of the proposal", required: true
       end
 
+      field :create_proposal, mutation: Decidim::Proposals::CreateProposalType, description: "Creates a proposal"
+
       def proposal(id:)
         collection.find(id)
       end
