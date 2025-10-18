@@ -23,10 +23,13 @@ input CreateProposalAttributes {
 
 ```graphql
 mutation {
-  createProposal(
-    componentId: ID!
-    attributes: CreateProposalAttributes!
-  ): Proposal
+  component(id: ID!) {
+    ... on ProposalsMutation {
+      createProposal(
+        attributes: CreateProposalAttributes!
+      ): Proposal
+    }
+  }
 }
 ```
 
@@ -38,22 +41,25 @@ Create a simple proposal with title and body:
 
 ```graphql
 mutation {
-  createProposal(input: {
-    componentId: "123"
-    attributes: {
-      title: "Improve Public Transportation"
-      body: "We need to expand bus routes to underserved neighborhoods to improve accessibility for all residents."
+  component(id: "123") {
+    ... on ProposalsMutation {
+      createProposal(input: {
+        attributes: {
+          title: "Improve Public Transportation"
+          body: "We need to expand bus routes to underserved neighborhoods to improve accessibility for all residents."
+        }
+      }) {
+        id
+        title {
+          translation(locale: "en")
+        }
+        body {
+          translation(locale: "en")
+        }
+        publishedAt
+        state
+      }
     }
-  }) {
-    id
-    title {
-      translation(locale: "en")
-    }
-    body {
-      translation(locale: "en")
-    }
-    publishedAt
-    state
   }
 }
 ```
@@ -83,24 +89,27 @@ Create a proposal with geographic location:
 
 ```graphql
 mutation {
-  createProposal(input: {
-    componentId: "123"
-    attributes: {
-      title: "Install Bike Lanes on Main Street"
-      body: "We propose adding dedicated bike lanes along Main Street to improve cyclist safety and encourage sustainable transportation."
-      address: "Main Street, Barcelona, Spain"
-      latitude: 41.3851
-      longitude: 2.1734
-    }
-  }) {
-    id
-    title {
-      translation(locale: "en")
-    }
-    address
-    coordinates {
-      latitude
-      longitude
+  component(id: "123") {
+    ... on ProposalsMutation {
+      createProposal(input: {
+        attributes: {
+          title: "Install Bike Lanes on Main Street"
+          body: "We propose adding dedicated bike lanes along Main Street to improve cyclist safety and encourage sustainable transportation."
+          address: "Main Street, Barcelona, Spain"
+          latitude: 41.3851
+          longitude: 2.1734
+        }
+      }) {
+        id
+        title {
+          translation(locale: "en")
+        }
+        address
+        coordinates {
+          latitude
+          longitude
+        }
+      }
     }
   }
 }
@@ -131,22 +140,25 @@ Create a proposal with taxonomies for categorization:
 
 ```graphql
 mutation {
-  createProposal(input: {
-    componentId: "123"
-    attributes: {
-      title: "Create Community Garden in Central Park"
-      body: "We propose converting an unused area of Central Park into a community garden where residents can grow vegetables and flowers together."
-      taxonomyIds: ["789", "790"]
-    }
-  }) {
-    id
-    title {
-      translation(locale: "en")
-    }
-    taxonomies {
-      id
-      name {
-        translation(locale: "en")
+  component(id: "123") {
+    ... on ProposalsMutation {
+      createProposal(input: {
+        attributes: {
+          title: "Create Community Garden in Central Park"
+          body: "We propose converting an unused area of Central Park into a community garden where residents can grow vegetables and flowers together."
+          taxonomyIds: ["789", "790"]
+        }
+      }) {
+        id
+        title {
+          translation(locale: "en")
+        }
+        taxonomies {
+          id
+          name {
+            translation(locale: "en")
+          }
+        }
       }
     }
   }
@@ -185,42 +197,45 @@ mutation {
 
 ```graphql
 mutation CreateCompleteProposal {
-  createProposal(input: {
-    componentId: "123"
-    attributes: {
-      title: "Renovate Old Town Square for Accessibility"
-      body: "The Old Town Square needs renovations to improve accessibility for people with disabilities. We propose installing ramps, accessible pathways, and better signage to make this historic area welcoming for all residents and visitors."
-      address: "Old Town Square, Barcelona, Spain"
-      latitude: 41.3879
-      longitude: 2.1699
-      taxonomyIds: ["800", "801"]
-    }
-  }) {
-    id
-    title {
-      translation(locale: "en")
-    }
-    body {
-      translation(locale: "en")
-    }
-    address
-    coordinates {
-      latitude
-      longitude
-    }
-    taxonomies {
-      id
-      name {
-        translation(locale: "en")
-      }
-    }
-    publishedAt
-    state
-    createdAt
-    coauthorships {
-      author {
-        ... on User {
-          name
+  component(id: "123") {
+    ... on ProposalsMutation {
+      createProposal(input: {
+        attributes: {
+          title: "Renovate Old Town Square for Accessibility"
+          body: "The Old Town Square needs renovations to improve accessibility for people with disabilities. We propose installing ramps, accessible pathways, and better signage to make this historic area welcoming for all residents and visitors."
+          address: "Old Town Square, Barcelona, Spain"
+          latitude: 41.3879
+          longitude: 2.1699
+          taxonomyIds: ["800", "801"]
+        }
+      }) {
+        id
+        title {
+          translation(locale: "en")
+        }
+        body {
+          translation(locale: "en")
+        }
+        address
+        coordinates {
+          latitude
+          longitude
+        }
+        taxonomies {
+          id
+          name {
+            translation(locale: "en")
+          }
+        }
+        publishedAt
+        state
+        createdAt
+        coauthorships {
+          author {
+            ... on User {
+              name
+            }
+          }
         }
       }
     }

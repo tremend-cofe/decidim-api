@@ -8,11 +8,12 @@ module Decidim
       description "Creates a proposal"
       type Decidim::Proposals::ProposalType
 
-      argument :component_id, GraphQL::Types::ID, description: "The component ID where the proposal will be created", required: true
       argument :attributes, CreateProposalAttributes, description: "Input attributes for the proposal", required: true
 
-      def resolve(component_id:, attributes:)
-        component = Decidim::Component.find_by(id: component_id)
+      def resolve(attributes:)
+        # Get component from context (when called through ProposalsMutationType)
+        # or from explicit component_id in test context
+        component = object.is_a?(Decidim::Component) ? object : context[:current_component]
         
         return GraphQL::ExecutionError.new(
           I18n.t("decidim.proposals.create.error")
@@ -65,8 +66,8 @@ module Decidim
         end
       end
 
-      def authorized?(component_id:, attributes:)
-        component = Decidim::Component.find_by(id: component_id)
+      def authorized?(attributes:)
+        component = object.is_a?(Decidim::Component) ? object : context[:current_component]
         return false unless component
 
         super && allowed_to?(:create, :proposal, {}, { current_component: component })

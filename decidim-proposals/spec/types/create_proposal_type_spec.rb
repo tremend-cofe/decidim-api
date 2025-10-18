@@ -23,7 +23,6 @@ module Decidim
       let(:variables) do
         {
           input: {
-            componentId: component.id.to_s,
             attributes: {
               title:,
               body:,
@@ -35,6 +34,7 @@ module Decidim
           }
         }
       end
+      let(:root_value) { component }
       let(:query) do
         <<~GRAPHQL
           mutation($input: CreateProposalInput!) {
