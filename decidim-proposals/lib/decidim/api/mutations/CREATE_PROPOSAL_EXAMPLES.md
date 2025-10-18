@@ -2,6 +2,22 @@
 
 This document provides practical examples for calling the CreateProposal mutation using different tools.
 
+## Note on Mutation Signature
+
+This mutation extends `BaseMutation` which uses GraphQL Relay conventions. The mutation arguments are automatically wrapped in an `input` object. 
+
+In the mutation definition, we have:
+```ruby
+argument :attributes, CreateProposalAttributes
+```
+
+But when calling it via GraphQL, you use:
+```graphql
+createProposal(input: { attributes: {...} })
+```
+
+This is because Relay mutations automatically generate an input type (e.g., `CreateProposalInput`) that wraps your arguments.
+
 ## Using cURL
 
 ### Example 1: Basic Request with OAuth Token
