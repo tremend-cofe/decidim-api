@@ -83,27 +83,24 @@ module Decidim
         context "with invalid title" do
           let(:title) { "Short" }
 
-          it "returns an error" do
-            expect(response["createProposal"]).to be_nil
-            expect(response.dig("errors", 0, "message")).to be_present
+          it "raises an error" do
+            expect { response }.to raise_error(StandardError, /too short/)
           end
         end
 
         context "with invalid body" do
           let(:body) { "Short" }
 
-          it "returns an error" do
-            expect(response["createProposal"]).to be_nil
-            expect(response.dig("errors", 0, "message")).to be_present
+          it "raises an error" do
+            expect { response }.to raise_error(StandardError, /too short/)
           end
         end
 
         context "without title" do
           let(:title) { "" }
 
-          it "returns an error" do
-            expect(response["createProposal"]).to be_nil
-            expect(response.dig("errors", 0, "message")).to be_present
+          it "raises an error" do
+            expect { response }.to raise_error(StandardError, /blank/)
           end
         end
       end
