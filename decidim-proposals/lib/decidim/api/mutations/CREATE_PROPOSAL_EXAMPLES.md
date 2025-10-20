@@ -4,7 +4,7 @@ This document provides practical examples for calling the CreateProposal mutatio
 
 ## Note on Mutation Signature
 
-This mutation extends `BaseMutation` which uses GraphQL Relay conventions. The mutation arguments are automatically wrapped in an `input` object. 
+This mutation extends `BaseMutation` which uses GraphQL Relay conventions. The mutation arguments are automatically wrapped in an `input` object.
 
 In the mutation definition, we have:
 ```ruby
@@ -51,8 +51,7 @@ curl -X POST https://your-decidim-instance.com/api \
         "body": "We propose adding dedicated bike lanes along Main Street to improve cyclist safety and encourage sustainable transportation.",
         "address": "Main Street, Barcelona, Spain",
         "latitude": 41.3851,
-        "longitude": 2.1734,
-        "taxonomyIds": ["789", "790"]
+        "longitude": 2.1734
       }
     }
   }'
@@ -99,11 +98,11 @@ async function createProposal(accessToken, componentId, proposalData) {
   });
 
   const result = await response.json();
-  
+
   if (result.errors) {
     throw new Error(result.errors.map(e => e.message).join(', '));
   }
-  
+
   return result.data.component.createProposal;
 }
 
@@ -113,8 +112,7 @@ const proposalData = {
   body: "We need to expand bus routes to underserved neighborhoods to improve accessibility for all residents.",
   address: "Main Street, Barcelona, Spain",
   latitude: 41.3851,
-  longitude: 2.1734,
-  taxonomyIds: ["789"]
+  longitude: 2.1734
 };
 
 createProposal('YOUR_ACCESS_TOKEN', '123', proposalData)
@@ -166,12 +164,11 @@ function CreateProposalForm() {
             body: formData.body,
             address: formData.address,
             latitude: formData.latitude,
-            longitude: formData.longitude,
-            taxonomyIds: formData.taxonomyIds
+            longitude: formData.longitude
           }
         }
       });
-      
+
       console.log('Created proposal:', result.data.component.createProposal);
     } catch (err) {
       console.error('Error:', err);
@@ -197,16 +194,16 @@ import json
 def create_proposal(access_token, component_id, proposal_data):
     """
     Create a proposal using the GraphQL API
-    
+
     Args:
         access_token (str): OAuth access token
         component_id (str): Component ID where the proposal will be created
         proposal_data (dict): Proposal attributes (title, body, address, etc.)
-    
+
     Returns:
         dict: Created proposal data
     """
-    
+
     query = """
     mutation CreateProposal($componentId: ID!, $attributes: CreateProposalAttributesInput!) {
         component(id: $componentId) {
@@ -225,28 +222,28 @@ def create_proposal(access_token, component_id, proposal_data):
         }
     }
     """
-    
+
     variables = {
         "componentId": component_id,
         "attributes": proposal_data
     }
-    
+
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {access_token}"
     }
-    
+
     response = requests.post(
         "https://your-decidim-instance.com/api",
         json={"query": query, "variables": variables},
         headers=headers
     )
-    
+
     result = response.json()
-    
+
     if "errors" in result:
         raise Exception(", ".join([e["message"] for e in result["errors"]]))
-    
+
     return result["data"]["component"]["createProposal"]
 
 
@@ -254,16 +251,15 @@ def create_proposal(access_token, component_id, proposal_data):
 if __name__ == "__main__":
     access_token = "YOUR_ACCESS_TOKEN"
     component_id = "123"
-    
+
     proposal_data = {
         "title": "Improve Public Transportation",
         "body": "We need to expand bus routes to underserved neighborhoods to improve accessibility for all residents.",
         "address": "Main Street, Barcelona, Spain",
         "latitude": 41.3851,
-        "longitude": 2.1734,
-        "taxonomyIds": ["789", "790"]
+        "longitude": 2.1734
     }
-    
+
     try:
         proposal = create_proposal(access_token, component_id, proposal_data)
         print(f"Proposal created with ID: {proposal['id']}")
@@ -302,11 +298,11 @@ def create_proposal(access_token, component_id, proposal_data)
   GRAPHQL
 
   uri = URI.parse("https://your-decidim-instance.com/api")
-  
+
   request = Net::HTTP::Post.new(uri)
   request.content_type = "application/json"
   request["Authorization"] = "Bearer #{access_token}"
-  
+
   request.body = JSON.dump({
     query: query,
     variables: {
@@ -314,17 +310,17 @@ def create_proposal(access_token, component_id, proposal_data)
       attributes: proposal_data
     }
   })
-  
+
   response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
     http.request(request)
   end
-  
+
   result = JSON.parse(response.body)
-  
+
   if result["errors"]
     raise result["errors"].map { |e| e["message"] }.join(", ")
   end
-  
+
   result.dig("data", "component", "createProposal")
 end
 
@@ -334,8 +330,7 @@ proposal_data = {
   body: "We need to expand bus routes to underserved neighborhoods to improve accessibility for all residents.",
   address: "Main Street, Barcelona, Spain",
   latitude: 41.3851,
-  longitude: 2.1734,
-  taxonomyIds: ["789"]
+  longitude: 2.1734
 }
 
 begin

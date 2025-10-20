@@ -19,9 +19,10 @@ module Decidim
       let(:address) { "Carrer de la Pau, 1, Barcelona" }
       let(:latitude) { 41.3851 }
       let(:longitude) { 2.1734 }
-      let(:taxonomy_ids) { [] }
+      let(:taxonomies) { [] }
       let(:variables) do
         {
+          component_id: proposal_component.id,
           input: {
             attributes: {
               title:,
@@ -29,7 +30,7 @@ module Decidim
               address:,
               latitude:,
               longitude:,
-              taxonomyIds: taxonomy_ids
+              taxonomies:
             }
           }
         }
@@ -37,7 +38,7 @@ module Decidim
       let(:root_value) { component }
       let(:query) do
         <<~GRAPHQL
-          mutation($input: CreateProposalInput!) {
+          mutation createProposal($input: CreateProposalInput!){
             createProposal(input: $input) {
               id
               title { translation(locale: "en") }
@@ -60,6 +61,10 @@ module Decidim
 
         it "creates the proposal" do
           proposal_response = response["createProposal"]
+
+          pp response
+
+
           expect(proposal_response).to be_present
           expect(proposal_response["title"]["translation"]).to eq(title)
           expect(proposal_response["body"]["translation"]).to include(body)
@@ -69,12 +74,12 @@ module Decidim
 
         context "with taxonomy_ids" do
           let(:taxonomy) { create(:taxonomy, organization:) }
-          let(:taxonomy_ids) { [taxonomy.id.to_s] }
+          let(:taxonomies) { [taxonomy.id.to_s] }
 
           it "creates the proposal with taxonomies" do
             proposal_response = response["createProposal"]
             expect(proposal_response).to be_present
-            
+
             created_proposal = Decidim::Proposals::Proposal.find(proposal_response["id"])
             expect(created_proposal.taxonomies).to include(taxonomy)
           end

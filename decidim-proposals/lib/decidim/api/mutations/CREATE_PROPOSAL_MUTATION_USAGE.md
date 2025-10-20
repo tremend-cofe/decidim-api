@@ -15,7 +15,6 @@ input CreateProposalAttributes {
   address: String             # Optional: Physical address for the proposal
   latitude: Float             # Optional: Latitude coordinate
   longitude: Float            # Optional: Longitude coordinate
-  taxonomyIds: [ID!]          # Optional: Array of taxonomy IDs for categorization
 }
 ```
 
@@ -134,66 +133,7 @@ mutation {
 }
 ```
 
-### Example 3: Proposal with Taxonomies/Categories
-
-Create a proposal with taxonomies for categorization:
-
-```graphql
-mutation {
-  component(id: "123") {
-    ... on ProposalsMutation {
-      createProposal(input: {
-        attributes: {
-          title: "Create Community Garden in Central Park"
-          body: "We propose converting an unused area of Central Park into a community garden where residents can grow vegetables and flowers together."
-          taxonomyIds: ["789", "790"]
-        }
-      }) {
-        id
-        title {
-          translation(locale: "en")
-        }
-        taxonomies {
-          id
-          name {
-            translation(locale: "en")
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-**Response:**
-```json
-{
-  "data": {
-    "createProposal": {
-      "id": "458",
-      "title": {
-        "translation": "Create Community Garden in Central Park"
-      },
-      "taxonomies": [
-        {
-          "id": "789",
-          "name": {
-            "translation": "Environment"
-          }
-        },
-        {
-          "id": "790",
-          "name": {
-            "translation": "Community"
-          }
-        }
-      ]
-    }
-  }
-}
-```
-
-### Example 4: Complete Example with All Fields
+### Example 3: Complete Example with All Fields
 
 ```graphql
 mutation CreateCompleteProposal {
@@ -206,7 +146,6 @@ mutation CreateCompleteProposal {
           address: "Old Town Square, Barcelona, Spain"
           latitude: 41.3879
           longitude: 2.1699
-          taxonomyIds: ["800", "801"]
         }
       }) {
         id
@@ -309,8 +248,6 @@ If you don't have permission to create proposals:
 4. **Geocoding**: If you provide an address without coordinates, the system may attempt to geocode it automatically if geocoding is enabled in the component settings.
 
 5. **Content Processing**: Title and body content will be processed for inline images and sanitized before being stored.
-
-6. **Coauthorship**: The current user is automatically added as a coauthor of the proposal.
 
 ## Related Files
 
