@@ -13,16 +13,11 @@ module Decidim
           on(:ok) do
             return object.reload
           end
-          on(:invalid) do
-            return GraphQL::ExecutionError.new(
-              I18n.t("proposal_votes.destroy.error", scope: "decidim.proposals")
-            )
-          end
-
-          GraphQL::ExecutionError.new(
-            I18n.t("proposal_votes.destroy.error", scope: "decidim.proposals")
-          )
         end
+
+        GraphQL::ExecutionError.new(
+          "There was a problem removing the vote from the proposal."
+        )
       end
 
       def authorized?

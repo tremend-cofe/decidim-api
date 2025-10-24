@@ -18,11 +18,11 @@ module Decidim
               I18n.t("proposal_votes.create.error", scope: "decidim.proposals")
             )
           end
-
-          GraphQL::ExecutionError.new(
-            I18n.t("proposal_votes.create.error", scope: "decidim.proposals")
-          )
         end
+
+        GraphQL::ExecutionError.new(
+          I18n.t("proposal_votes.create.error", scope: "decidim.proposals")
+        )
       end
 
       def authorized?
