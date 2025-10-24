@@ -10,9 +10,10 @@ module Decidim
 
       let(:type_class) { Decidim::Proposals::CreateProposalType }
       let(:root_klass) { Decidim::Proposals::ProposalsMutationType }
-      let(:organization) { create(:organization, available_locales: [:en]) }
+      let(:current_organization) { create(:organization, available_locales: [:en]) }
+      let(:organization) { current_organization }
       let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
-      let(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
+      let(:proposal_component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
       let(:component) { proposal_component }
       let(:title) { "A great proposal title" }
       let(:body) { "This is the body of my proposal with enough content to be valid" }
