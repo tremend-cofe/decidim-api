@@ -17,7 +17,7 @@ module Decidim
       let(:component) { model.component }
       let(:variables) do
         {
-          input: {}
+          input: {} # WithdrawProposal doesn't require any attributes, only the proposal object
         }
       end
       let(:query) do
