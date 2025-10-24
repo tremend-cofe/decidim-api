@@ -13,13 +13,9 @@ module Decidim
           on(:ok) do
             return object.reload
           end
-          on(:invalid) do
-            return GraphQL::ExecutionError.new(
-              I18n.t("proposal_votes.destroy.error", scope: "decidim.proposals")
-            )
-          end
         end
 
+        # This should never be reached as UnvoteProposal always broadcasts :ok
         GraphQL::ExecutionError.new(
           I18n.t("proposal_votes.destroy.error", scope: "decidim.proposals")
         )
