@@ -65,7 +65,6 @@ module Decidim
 
           pp response
 
-
           expect(proposal_response).to be_present
           expect(proposal_response["title"]["translation"]).to eq(title)
           expect(proposal_response["body"]["translation"]).to include(body)

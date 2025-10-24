@@ -18,7 +18,7 @@ module Decidim
         form = Decidim::Proposals::ProposalForm.from_params(
           params
         ).with_context(
-          current_component: ,
+          current_component:,
           current_user:,
           current_organization: current_user.organization
         )
@@ -31,14 +31,13 @@ module Decidim
               end
 
               on(:invalid) do
-                raise  GraphQL::ExecutionError.new( I18n.t("proposals.publish.error", scope: "decidim"))
+                raise GraphQL::ExecutionError, I18n.t("proposals.publish.error", scope: "decidim")
               end
             end
-
           end
 
           on(:invalid) do
-            raise  GraphQL::ExecutionError.new(form.errors.full_messages.join(", "))
+            raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
           end
         end
       end
