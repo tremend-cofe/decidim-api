@@ -10,6 +10,7 @@ module Decidim
 
       field :answer, mutation: Decidim::Proposals::ProposalAnswerType, description: "Answers a proposal"
       field :update, mutation: Decidim::Proposals::UpdateProposalType, description: "Updates a proposal"
+      field :withdraw, mutation: Decidim::Proposals::WithdrawProposalType, description: "Withdraws a proposal"
     end
   end
 end
