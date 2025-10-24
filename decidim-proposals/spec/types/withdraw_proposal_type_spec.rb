@@ -15,6 +15,11 @@ module Decidim
       let(:author) { create(:user, :confirmed, organization:) }
       let!(:model) { create(:proposal, component: proposal_component, users: [author]) }
       let(:component) { model.component }
+      let(:variables) do
+        {
+          input: {}
+        }
+      end
       let(:query) do
         <<~GRAPHQL
           mutation() {
