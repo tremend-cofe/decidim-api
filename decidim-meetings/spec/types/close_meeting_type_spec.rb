@@ -24,7 +24,7 @@ module Decidim
           input: {
             attributes: {
               closingReport: closing_report,
-              attendesCount: attendees_count,
+              attendeesCount: attendees_count,
               proposalIds: proposal_ids
             }
           }
@@ -37,7 +37,7 @@ module Decidim
             close(input: $input) {
               id
               closed
-              attendesCount
+              attendeesCount
               closingReport { translation(locale: "en") }
               closedAt
             }

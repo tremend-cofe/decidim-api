@@ -17,7 +17,7 @@ shared_examples "manage meeting mutation examples" do
         {
           "id" => model.id.to_s,
           "closed" => true,
-          "attendesCount" => attendees_count,
+          "attendeesCount" => attendees_count,
           "closingReport" => {
             "translation" => closing_report[:en]
           },
