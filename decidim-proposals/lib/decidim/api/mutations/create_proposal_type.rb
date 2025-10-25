@@ -48,14 +48,6 @@ module Decidim
 
         super && allowed_to?(:create, :proposal, Decidim::Proposals::Proposal.new(component:), { current_user:, current_component: })
       end
-
-      def current_user
-        context[:current_user]
-      end
-
-      def current_component
-        context[:current_component]
-      end
     end
   end
 end

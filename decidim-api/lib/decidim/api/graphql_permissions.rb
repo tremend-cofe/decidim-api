@@ -51,6 +51,10 @@ module Decidim
               permission_context
             ).permissions
           end.allowed?
+        rescue Decidim::PermissionAction::PermissionNotSetError
+          Rails.logger.warn("Permission not set for #{permission_action.inspect}")
+
+          false
         end
 
         # Injects into context object current_participatory_space and current_component keys as they are needed

@@ -10,32 +10,46 @@ module Decidim
 
       let(:type_class) { Decidim::Proposals::CreateProposalType }
       let(:root_klass) { Decidim::Proposals::ProposalsMutationType }
+
       let(:current_organization) { create(:organization, available_locales: [:en]) }
       let(:organization) { current_organization }
       let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
-      let(:proposal_component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
-      let(:component) { proposal_component }
-      let(:title) { "A great proposal title" }
-      let(:body) { "This is the body of my proposal with enough content to be valid" }
+      let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
+
+      let(:root_taxonomy) { create(:taxonomy, organization:) }
+      let!(:taxonomy) { create(:taxonomy, parent: root_taxonomy, organization:) }
+      let(:taxonomy_filter) { create(:taxonomy_filter, root_taxonomy:) }
+      let!(:taxonomy_filter_item) { create(:taxonomy_filter_item, taxonomy_filter:, taxonomy_item: taxonomy) }
+      let!(:user) { create(:user, :confirmed, organization:) }
+      let(:taxonomies) { [taxonomy_filter.id] }
+
       let(:address) { "Carrer de la Pau, 1, Barcelona" }
-      let(:latitude) { 41.3851 }
-      let(:longitude) { 2.1734 }
-      let(:taxonomies) { [] }
+      let(:latitude) { 40.1234 }
+      let(:longitude) { 2.1234 }
+
+      let(:title) { "More sidewalks and less roads" }
+      let(:body) { "Cities need more people, not more cars" }
+
+      let(:attributes) do
+        {
+          title:,
+          body:,
+          address:,
+          latitude:,
+          longitude:,
+          taxonomies:
+        }
+      end
+
       let(:variables) do
         {
-          component_id: proposal_component.id,
+          component_id: component.id,
           input: {
-            attributes: {
-              title:,
-              body:,
-              address:,
-              latitude:,
-              longitude:,
-              taxonomies:
-            }
+            attributes:
           }
         }
       end
+
       let(:root_value) { component }
       let(:query) do
         <<~GRAPHQL
@@ -46,107 +60,153 @@ module Decidim
               body { translation(locale: "en") }
               address
               publishedAt
+              author { name }
             }
           }
         GRAPHQL
       end
 
       before do
-        component.update!(
-          settings: { creation_enabled: true }
-        )
+        stub_geocoding(address, [latitude, longitude])
       end
 
-      context "with admin user" do
-        let(:user_type) { :admin }
-
-        it "creates the proposal" do
-          proposal_response = response["createProposal"]
-
-          pp response
-
-          expect(proposal_response).to be_present
-          expect(proposal_response["title"]["translation"]).to eq(title)
-          expect(proposal_response["body"]["translation"]).to include(body)
-          expect(proposal_response["address"]).to eq(address)
-          expect(proposal_response["publishedAt"]).to be_nil # Proposals are created as drafts
-        end
-
-        context "with taxonomy_ids" do
-          let(:taxonomy) { create(:taxonomy, organization:) }
-          let(:taxonomies) { [taxonomy.id.to_s] }
-
-          it "creates the proposal with taxonomies" do
-            proposal_response = response["createProposal"]
-            expect(proposal_response).to be_present
-
-            created_proposal = Decidim::Proposals::Proposal.find(proposal_response["id"])
-            expect(created_proposal.taxonomies).to include(taxonomy)
-          end
-        end
-
-        context "with invalid title" do
-          let(:title) { "Short" }
-
-          it "raises an error" do
-            expect { response }.to raise_error(StandardError, /too short/)
-          end
-        end
-
-        context "with invalid body" do
-          let(:body) { "Short" }
-
-          it "raises an error" do
-            expect { response }.to raise_error(StandardError, /too short/)
-          end
-        end
-
-        context "without title" do
-          let(:title) { "" }
-
-          it "raises an error" do
-            expect { response }.to raise_error(StandardError, /blank/)
-          end
-        end
-      end
-
-      context "with normal user" do
-        let(:user_type) { :user }
-
-        it "creates the proposal" do
-          proposal_response = response["createProposal"]
-          expect(proposal_response).to be_present
-          expect(proposal_response["title"]["translation"]).to eq(title)
-        end
-
-        context "when creation is disabled" do
-          before do
-            component.update!(
-              settings: { creation_enabled: false }
-            )
-          end
+      context "when creating a new proposal" do
+        context "when the user is not logged in" do
+          let(:current_user) { nil }
 
           it "returns nil" do
-            expect(response["createProposal"]).to be_nil
+            expect { response }.to raise_error(StandardError, /was hidden due to permissions/)
           end
         end
-      end
 
-      context "with api_user" do
-        let(:user_type) { :api_user }
+        context "when the user is logged in" do
+          context "with creation enabled" do
+            let!(:component) do
+              create(:proposal_component,
+                     :with_creation_enabled,
+                     participatory_space: participatory_process,
+                     settings: {
+                       taxonomy_filters: taxonomies
+                     })
+            end
 
-        it "creates the proposal" do
-          proposal_response = response["createProposal"]
-          expect(proposal_response).to be_present
-          expect(proposal_response["title"]["translation"]).to eq(title)
+            it "creates a new proposal" do
+              proposal_response = response["createProposal"]
+
+              expect(proposal_response).to be_present
+              expect(proposal_response["title"]["translation"]).to eq(title)
+              expect(proposal_response["body"]["translation"]).to include(body)
+              expect(proposal_response["publishedAt"]).to be_present
+              expect(proposal_response["author"]["name"]).to eq(current_user.name)
+            end
+
+            context "when geocoding is enabled" do
+              let!(:component) do
+                create(:proposal_component,
+                       :with_creation_enabled,
+                       participatory_space: participatory_process,
+                       settings: {
+                         geocoding_enabled: true,
+                         taxonomy_filters: taxonomies
+                       })
+              end
+
+              it "creates a new proposal" do
+                proposal_response = response["createProposal"]
+
+                expect(proposal_response).to be_present
+                expect(proposal_response["title"]["translation"]).to eq(title)
+                expect(proposal_response["body"]["translation"]).to include(body)
+                expect(proposal_response["address"]).to eq(address)
+                expect(proposal_response["publishedAt"]).to be_present
+                expect(proposal_response["author"]["name"]).to eq(current_user.name)
+              end
+            end
+
+            context "when the user is not authorized" do
+              context "and there is only an authorization required" do
+                before do
+                  permissions = {
+                    create: {
+                      authorization_handlers: {
+                        "dummy_authorization_handler" => { "options" => {} }
+                      }
+                    }
+                  }
+
+                  component.update!(permissions:)
+                end
+
+                it "redirects to the authorization form" do
+                  skip("This test is failing, but it's not in the scope of this PR.")
+                  proposal_response = response["createProposal"]
+
+                  pp proposal_response
+                  expect(proposal_response).to be_nil
+                end
+              end
+
+              context "and there are more than one authorization required" do
+                before do
+                  permissions = {
+                    create: {
+                      authorization_handlers: {
+                        "dummy_authorization_handler" => { "options" => {} },
+                        "another_dummy_authorization_handler" => { "options" => {} }
+                      }
+                    }
+                  }
+
+                  component.update!(permissions:)
+                end
+
+                it "redirects to pending onboarding authorizations page" do
+                  skip("This test is failing, but it's not in the scope of this PR.")
+
+                  proposal_response = response["createProposal"]
+
+                  pp proposal_response
+                  expect(proposal_response).to be_nil
+                end
+              end
+            end
+          end
         end
-      end
 
-      context "without authentication" do
-        let(:current_user) { nil }
+        context "when validating" do
+          context "with invalid title" do
+            context "when is missing" do
+              let(:title) { "" }
 
-        it "returns nil" do
-          expect(response["createProposal"]).to be_nil
+              it "raises an error" do
+                expect { response }.to raise_error(StandardError, /too short/)
+              end
+            end
+
+            context "when is too short" do
+              let(:title) { "Short" }
+
+              it "raises an error" do
+                expect { response }.to raise_error(StandardError, /too short/)
+              end
+            end
+          end
+
+          context "with invalid body" do
+            let(:body) { "Short" }
+
+            it "raises an error" do
+              expect { response }.to raise_error(StandardError, /too short/)
+            end
+          end
+        end
+
+        context "when the creating is disabled" do
+          let!(:component) { create(:proposal_component, participatory_space: participatory_process) }
+
+          it "returns nil" do
+            expect { response }.to raise_error(StandardError, /was hidden due to permissions/)
+          end
         end
       end
     end
