@@ -6,6 +6,34 @@ The Meetings module adds meeting to any participatory process. It adds a CRUD en
 
 Meetings will be available as a component for a Participatory Process.
 
+## GraphQL API
+
+This module provides GraphQL mutations for meeting management:
+
+### WithdrawMeeting Mutation
+
+Allows authenticated users to withdraw meetings they have authored.
+
+For complete usage examples, see the root-level `WITHDRAW_MEETING_MUTATION_EXAMPLE.md` file.
+
+Quick example:
+
+```graphql
+mutation WithdrawMeeting($componentId: ID!, $meetingId: ID!) {
+  meetings(id: $componentId) {
+    meeting(id: $meetingId) {
+      withdraw(input: { attributes: {} }) {
+        id
+        withdrawn
+        withdrawnAt
+      }
+    }
+  }
+}
+```
+
+See `lib/decidim/api/mutations/README.md` for more details about the mutations.
+
 ## Installation
 
 Add this line to your application's Gemfile:
