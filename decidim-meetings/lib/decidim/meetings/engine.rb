@@ -75,6 +75,12 @@ module Decidim
         Decidim.icons.register(name: "calendar-close-line", icon: "calendar-close-line", category: "system", description: "", engine: :meetings)
       end
 
+      initializer "decidim_meetings.register_mutations", before: "decidim_api.graphiql" do
+        Decidim::MutationRegistry.instance.register(
+          Decidim::Meetings::MeetingsMutationType
+        )
+      end
+
       initializer "decidim_meetings.content_processors" do |_app|
         Decidim.configure do |config|
           config.content_processors += [:meeting]
