@@ -2,7 +2,7 @@
 
 module Decidim
   module Meetings
-    class MeetingsMutationType < Decidim::Api::Types::BaseObject
+    class MeetingsMutationType < Decidim::Core::ComponentType
       graphql_name "MeetingsMutation"
       description "A meetings component with its available mutations"
 
