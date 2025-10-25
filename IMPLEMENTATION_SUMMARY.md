@@ -58,15 +58,17 @@ This PR implements a GraphQL mutation for closing meetings in Decidim, following
 ## Total Statistics
 - **Files Created**: 9
 - **Files Modified**: 2
-- **Total Lines of Code**: ~1,500 (excluding documentation)
+- **Total Lines of Code**: 226 lines (mutation and test files)
 - **Total Documentation**: ~17,000 characters
 
 ## Key Technical Details
 
 ### Authorization
 ```ruby
+# Authorization checks both the base permission and meeting-specific permission
 allowed_to?(:close, :meeting, object, context, meeting: object)
 ```
+This pattern follows Decidim's authorization conventions where the object is passed both as a positional parameter for general context and as a named parameter for resource-specific checks.
 
 ### Command Integration
 Uses existing `Decidim::Meetings::CloseMeeting` command, ensuring consistency with web UI.
@@ -106,25 +108,33 @@ input CloseMeetingAttributes {
 
 ## Usage Example
 
+The mutation is accessed through the component's mutation endpoint:
+
 ```graphql
-mutation {
-  meetings(id: "1") {
-    meeting(id: "123") {
-      close(input: {
-        attributes: {
-          closingReport: { en: "Meeting closed successfully" }
-          attendeesCount: 25
-          proposalIds: ["1", "2"]
-        }
-      }) {
-        id
-        closed
-        closedAt
-      }
+mutation CloseMeeting($input: CloseMeetingInput!) {
+  close(input: $input) {
+    id
+    closed
+    attendeesCount
+    closedAt
+  }
+}
+```
+
+With variables:
+```json
+{
+  "input": {
+    "attributes": {
+      "closingReport": { "en": "Meeting closed successfully" },
+      "attendeesCount": 25,
+      "proposalIds": ["1", "2"]
     }
   }
 }
 ```
+
+**Note**: The actual GraphQL endpoint structure depends on how the mutation is registered in the component's schema. The mutation can be accessed through the component's meetings mutation type. For complete examples including the full query path, see `CLOSE_MEETING_EXAMPLES.md`.
 
 ## References
 - Based on: decidim-proposals/lib/decidim/api/mutations/proposal_answer_type.rb
