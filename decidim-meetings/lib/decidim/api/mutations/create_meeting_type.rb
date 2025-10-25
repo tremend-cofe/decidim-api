@@ -15,11 +15,11 @@ module Decidim
         component = current_user.organization.components.find_by(id: component_id)
 
         return GraphQL::ExecutionError.new(
-          I18n.t("decidim.meetings.create.component_not_found")
+          "Component not found"
         ) unless component
 
         return GraphQL::ExecutionError.new(
-          I18n.t("decidim.meetings.create.invalid_component")
+          "Invalid component type. Must be a meetings component."
         ) unless component.manifest_name == "meetings"
 
         attrs = attributes.to_h
