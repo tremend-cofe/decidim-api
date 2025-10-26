@@ -10,7 +10,7 @@ module Decidim
       let(:type_class) { Decidim::ParticipatoryProcesses::ParticipatoryProcessType }
 
       let(:model) { create(:participatory_process, organization: current_organization) }
-      let!(:proposal) { create(:proposal_component, :published, participatory_space: model) }
+      let!(:proposal) { create(:dummy_component, :published, participatory_space: model) }
       let!(:dummy) { create(:component, :published, participatory_space: model) }
 
       context "when no filters are applied" do
@@ -51,7 +51,7 @@ module Decidim
       end
 
       context "when searching components with comments not enabled" do
-        let!(:model_with_comments_disabled) { create(:proposal_component, :with_comments_disabled, participatory_space: model) }
+        let!(:model_with_comments_disabled) { create(:dummy_component, :with_comments_disabled, participatory_space: model) }
         let(:query) { "{ components(filter: { withCommentsEnabled: false } ) { id } }" }
 
         it "returns the component with comments not enabled" do
@@ -61,7 +61,7 @@ module Decidim
       end
 
       context "when searching components with maps enabled" do
-        let!(:model_with_geocoding_enabled) { create(:proposal_component, :published, :with_geocoding_enabled, participatory_space: model) }
+        let!(:model_with_geocoding_enabled) { create(:dummy_component, :published, :with_geocoding_enabled, participatory_space: model) }
         let(:query) { "{ components(filter: { withGeolocationEnabled: true} ) { id } }" }
 
         it "returns the component with maps enabled" do
