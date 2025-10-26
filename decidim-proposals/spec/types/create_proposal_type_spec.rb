@@ -138,7 +138,7 @@ module Decidim
                 end
 
                 it "redirects to the authorization form" do
-                  skip("This test is failing, but it's not in the scope of this PR.")
+                  skip("This test is failing, but it iss not in the scope of this PR.")
                   proposal_response = response["createProposal"]
 
                   pp proposal_response
@@ -161,7 +161,7 @@ module Decidim
                 end
 
                 it "redirects to pending onboarding authorizations page" do
-                  skip("This test is failing, but it's not in the scope of this PR.")
+                  skip("This test is failing, but it iss not in the scope of this PR.")
 
                   proposal_response = response["createProposal"]
 
