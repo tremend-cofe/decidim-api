@@ -358,12 +358,6 @@ module Decidim
         app.config.i18n.fallbacks = true
       end
 
-      initializer "decidim_core.graphql_api" do
-        Decidim::Api::QueryType.include Decidim::QueryExtensions
-
-        Decidim::Api.add_orphan_type Decidim::Core::UserType
-      end
-
       initializer "decidim_core.ransack" do
         Ransack.configure do |config|
           # Avoid turning parameter values such as user_id[]=1&user_id[]=2 into
