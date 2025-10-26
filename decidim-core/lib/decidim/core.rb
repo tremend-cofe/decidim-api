@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "decidim/core/engine"
-require "decidim/core/api"
 require "decidim/core/version"
 
 # Decidim configuration.
