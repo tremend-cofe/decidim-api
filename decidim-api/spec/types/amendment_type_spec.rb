@@ -20,8 +20,8 @@ module Decidim
         )
       end
       let(:user) { create(:user, :confirmed) }
-      let(:amendable) { create(:proposal) }
-      let(:emendation) { create(:proposal) }
+      let(:amendable) { create(:dummy_resource) }
+      let(:emendation) { create(:dummy_resource) }
 
       describe "id" do
         let(:query) { "{ id }" }
@@ -64,7 +64,7 @@ module Decidim
       end
 
       describe "emendation" do
-        let(:query) { '{ emendation { ...on Proposal { title { translation(locale: "en")} } } }' }
+        let(:query) { '{ emendation { ...on DummyResource { title { translation(locale: "en")} } } }' }
 
         it "returns the emendation as a string" do
           expect(response["emendation"]["title"]["translation"]).to eq(emendation.title["en"])
@@ -72,7 +72,7 @@ module Decidim
       end
 
       describe "amendable" do
-        let(:query) { '{ amendable { ...on Proposal { title { translation(locale: "en")} } } }' }
+        let(:query) { '{ amendable { ...on DummyResource { title { translation(locale: "en")} } } }' }
 
         it "returns the amendable as a string" do
           expect(response["amendable"]["title"]["translation"]).to eq(amendable.title["en"])

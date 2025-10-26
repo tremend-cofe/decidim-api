@@ -7,12 +7,15 @@ Decidim.register_component(:dummy) do |component|
 
   component.actions = %w(foo bar)
 
+  component.query_type = "Decidim::Dev::DummyResourcesType"
+
   component.newsletter_participant_entities = ["Decidim::Dev::DummyResource"]
   component.permissions_class_name = "Decidim::Dev::Permissions"
 
   component.settings(:global) do |settings|
     settings.attribute :taxonomy_filters, type: :taxonomy_filters, default: []
     settings.attribute :comments_enabled, type: :boolean, default: true
+    settings.attribute :geocoding_enabled, type: :boolean, default: false
     settings.attribute :comments_max_length, type: :integer, required: false
     settings.attribute :resources_permissions_enabled, type: :boolean, default: true
     settings.attribute :dummy_global_attribute1, type: :boolean

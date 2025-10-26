@@ -18,6 +18,7 @@ en:
       dummy:
         settings:
           global:
+            geocoding_enabled: Geocoding enabled
             clear_all: Clear all
             guided: Guided input
             guided_help: Help text

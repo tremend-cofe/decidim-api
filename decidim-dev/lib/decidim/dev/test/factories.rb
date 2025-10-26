@@ -9,6 +9,14 @@ FactoryBot.define do
     end
     name { generate_component_name(participatory_space.organization.available_locales, :surveys, skip_injection:) }
     manifest_name { :dummy }
+
+    trait :with_geocoding_enabled do
+      settings do
+        {
+          geocoding_enabled: true
+        }
+      end
+    end
   end
 
   factory :dummy_resource, class: "Decidim::Dev::DummyResource" do

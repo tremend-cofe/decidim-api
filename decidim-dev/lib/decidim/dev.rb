@@ -22,6 +22,8 @@ module Decidim
   module Dev
     include ActiveSupport::Configurable
     autoload :DummyTranslator, "decidim/dev/dummy_translator"
+    autoload :DummyResourceType, "decidim/api/dummy_resource_type"
+    autoload :DummyResourcesType, "decidim/api/dummy_resources_type"
 
     # Public: Finds an asset.
     #
