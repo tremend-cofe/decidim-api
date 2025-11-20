@@ -53,7 +53,7 @@ module Decidim
             ).permissions
           end.allowed?
         rescue Decidim::PermissionAction::PermissionNotSetError
-          Rails.logger.warn("Permission not set for #{permission_action.inspect}")
+          Rails.logger.warn("[API] - Permission not set for #{permission_action.inspect}")
 
           false
         end
