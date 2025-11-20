@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+
+module Decidim
+  module Proposals
+    class UpdateProposalType < Decidim::Api::Types::BaseMutation
+      graphql_name "UpdateProposal"
+
+      description "Updates a proposal"
+      type Decidim::Proposals::ProposalType
+
+      argument :attributes, UpdateProposalAttributes, description: "Input attributes for updating a proposal", required: true
+
+      def resolve(attributes:)
+        title = attributes.to_h.fetch(:title, object.title)
+        body = attributes.to_h.fetch(:body, object.body)
+        address = attributes.to_h.fetch(:address, object.address)
+        latitude = attributes.to_h.fetch(:latitude, object.latitude)
+        longitude = attributes.to_h.fetch(:longitude, object.longitude)
+        
+        params = {
+          title:,
+          body:,
+          address:,
+          latitude:,
+          longitude:
+        }
+
+        form = Decidim::Proposals::ProposalForm.from_params(
+          params
+        ).with_context(
+          current_component: object.component,
+          current_user:,
+          current_organization: current_user.organization,
+          current_participatory_space: object.component.participatory_space
+        )
+
+        UpdateProposal.call(form, current_user, object) do
+          on(:ok) do |proposal|
+            return proposal
+          end
+          on(:invalid) do
+            return GraphQL::ExecutionError.new(
+              form.errors.full_messages.join(", ")
+            )
+          end
+
+          GraphQL::ExecutionError.new(
+            I18n.t("decidim.proposals.update.error")
+          )
+        end
+      end
+
+      def authorized?(attributes:)
+        super && allowed_to?(:edit, :proposal, object, context)
+      end
+
+      def current_user
+        context[:current_user]
+      end
+    end
+  end
+end
