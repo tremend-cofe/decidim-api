@@ -44,7 +44,7 @@ module Decidim
           permission_action = Decidim::PermissionAction.new(scope:, action:, subject:)
 
           permission_chain(object).inject(permission_action) do |current_permission_action, permission_class|
-            permission_context = local_admin_context(object, context)
+            permission_context = local_user_context(object, context)
 
             permission_class.new(
               context[:current_user],
@@ -53,7 +53,7 @@ module Decidim
             ).permissions
           end.allowed?
         rescue Decidim::PermissionAction::PermissionNotSetError
-          Rails.logger.warn("Permission not set for #{permission_action.inspect}")
+          Rails.logger.warn("[API] - Permission not set for #{permission_action.inspect}")
 
           false
         end
@@ -76,7 +76,7 @@ module Decidim
           context.to_h
         end
 
-        def local_admin_context(object, context)
+        def local_user_context(object, context)
           context = local_context(object, context)
 
           component = context[:current_component]
