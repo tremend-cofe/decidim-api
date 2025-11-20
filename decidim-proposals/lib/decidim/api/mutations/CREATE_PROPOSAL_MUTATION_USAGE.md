@@ -64,6 +64,7 @@ mutation {
 ```
 
 **Response:**
+
 ```json
 {
   "data": {
@@ -115,6 +116,7 @@ mutation {
 ```
 
 **Response:**
+
 ```json
 {
   "data": {
@@ -187,7 +189,8 @@ mutation CreateCompleteProposal {
 This mutation requires authentication. You can authenticate using:
 
 1. **OAuth2 Token** (for API users):
-   ```
+
+   ```http request
    Authorization: Bearer YOUR_ACCESS_TOKEN
    ```
 
@@ -197,6 +200,7 @@ This mutation requires authentication. You can authenticate using:
 ## Permissions
 
 The mutation checks:
+
 - User must be authenticated
 - User must have permission to create proposals in the specified component
 - Component must have proposal creation enabled in settings
@@ -268,6 +272,7 @@ bundle exec rspec decidim-proposals/spec/types/create_proposal_type_spec.rb
 ## References
 
 This mutation was inspired by:
+
 - `ProposalAnswerType` mutation pattern
 - `ProposalAnswersController#create` method
 - Decidim PRs: #14996, #14974, #14911, #14885, #14881

@@ -7,7 +7,9 @@ This document summarizes the new CreateProposal GraphQL mutation implementation 
 ### 1. Core Mutation Files
 
 #### `decidim-proposals/lib/decidim/api/mutations/create_proposal_type.rb`
+
 The main mutation class that:
+
 - Extends `Decidim::Api::Types::BaseMutation` (follows Relay conventions)
 - Accepts proposal attributes (title, body, address, coordinates, taxonomies)
 - Uses the existing `Decidim::Proposals::CreateProposal` command
@@ -16,7 +18,9 @@ The main mutation class that:
 - Returns created proposal or error
 
 #### `decidim-proposals/lib/decidim/api/mutations/create_proposal_attributes.rb`
+
 Input object defining the mutation parameters:
+
 - `title` (String, required) - 15-150 characters
 - `body` (String, required) - minimum 15 characters
 - `address` (String, optional)
@@ -27,21 +31,27 @@ Input object defining the mutation parameters:
 ### 2. Integration Updates
 
 #### `decidim-proposals/lib/decidim/api/mutations/proposals_mutation_type.rb`
+
 Added field:
+
 ```ruby
-field :create_proposal, mutation: Decidim::Proposals::CreateProposalType, 
+field :create_proposal, mutation: Decidim::Proposals::CreateProposalType,
       description: "Creates a proposal"
 ```
 
 #### `decidim-proposals/lib/decidim/proposals/api.rb`
+
 Registered autoload for:
+
 - `CreateProposalType`
 - `CreateProposalAttributes`
 
 ### 3. Tests
 
 #### `decidim-proposals/spec/types/create_proposal_type_spec.rb`
+
 Comprehensive test coverage:
+
 - ✅ Admin user can create proposals
 - ✅ Normal user can create proposals
 - ✅ API user can create proposals
@@ -53,7 +63,9 @@ Comprehensive test coverage:
 ### 4. Documentation
 
 #### `decidim-proposals/lib/decidim/api/mutations/CREATE_PROPOSAL_MUTATION_USAGE.md`
+
 Complete usage guide with:
+
 - GraphQL schema definition
 - Input type documentation
 - 4 detailed examples with expected responses
@@ -63,7 +75,9 @@ Complete usage guide with:
 - Important notes about draft status, content processing, etc.
 
 #### `decidim-proposals/lib/decidim/api/mutations/CREATE_PROPOSAL_EXAMPLES.md`
+
 Practical implementation examples:
+
 - cURL examples (basic and complete)
 - JavaScript/TypeScript (Fetch API and Apollo Client)
 - Python (with requests library)
@@ -127,10 +141,12 @@ mutation {
 ## Authentication
 
 Requires OAuth token with scopes:
+
 - `api:read` - Read access
 - `api:write` - Write access (required for mutations)
 
 Example:
+
 ```bash
 curl -H "Authorization: Bearer YOUR_ACCESS_TOKEN" ...
 ```
@@ -160,7 +176,7 @@ curl -H "Authorization: Bearer YOUR_ACCESS_TOKEN" ...
 
 ### File Structure
 
-```
+```text
 decidim-proposals/
 ├── lib/
 │   └── decidim/
@@ -181,6 +197,7 @@ decidim-proposals/
 ## Testing
 
 Run the spec:
+
 ```bash
 cd decidim-proposals
 bundle exec rspec spec/types/create_proposal_type_spec.rb
@@ -189,6 +206,7 @@ bundle exec rspec spec/types/create_proposal_type_spec.rb
 ## References
 
 This implementation was inspired by:
+
 - Decidim PRs: #14996, #14974, #14911, #14885, #14881
 - `ProposalAnswerType` mutation pattern
 - `ProposalAnswersController#create` method
@@ -206,6 +224,7 @@ This implementation was inspired by:
 ## Support
 
 For questions or issues:
+
 - See detailed documentation in `CREATE_PROPOSAL_MUTATION_USAGE.md`
 - Check practical examples in `CREATE_PROPOSAL_EXAMPLES.md`
 - Review the spec file for test cases

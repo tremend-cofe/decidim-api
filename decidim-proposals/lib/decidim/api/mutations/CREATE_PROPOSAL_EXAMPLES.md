@@ -7,11 +7,13 @@ This document provides practical examples for calling the CreateProposal mutatio
 This mutation extends `BaseMutation` which uses GraphQL Relay conventions. The mutation arguments are automatically wrapped in an `input` object.
 
 In the mutation definition, we have:
+
 ```ruby
 argument :attributes, CreateProposalAttributes
 ```
 
 But when calling it via GraphQL, you use:
+
 ```graphql
 createProposal(input: { attributes: {...} })
 ```
@@ -349,6 +351,7 @@ Before you can use the mutation, you need to obtain an OAuth access token. Here'
 ### 1. Register an OAuth Application
 
 In your Decidim instance, go to:
+
 - User menu → Account Settings → Applications
 - Click "New application"
 - Fill in the details and select the scopes: `api:read` and `api:write`
@@ -412,6 +415,7 @@ Common errors and their solutions:
 ```
 
 **Solution**: Check that:
+
 - Your access token is valid and has `api:write` scope
 - Proposal creation is enabled in the component settings
 - You have permission to create proposals
