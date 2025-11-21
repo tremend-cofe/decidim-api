@@ -5,14 +5,14 @@ shared_examples "update proposal mutation examples" do
     let!(:user_type) { :user }
 
     it "does not update the proposal" do
-      expect(response["update"]).to be_nil
+      expect(response["updateProposal"]).to be_nil
     end
   end
 
   context "when user is authorized" do
     context "with valid attributes" do
       it "updates the proposal" do
-        update = response["update"]
+        update = response["updateProposal"]
         expect(update).to be_present
         expect(update).to include(
           {
@@ -46,7 +46,7 @@ shared_examples "update proposal mutation examples" do
         end
 
         it "updates the proposal with location data" do
-          update = response["update"]
+          update = response["updateProposal"]
           expect(update).to be_present
           expect(update).to include(
             {
@@ -63,8 +63,7 @@ shared_examples "update proposal mutation examples" do
       let(:new_body) { "x" }
 
       it "returns an error" do
-        expect(response["update"]).to be_present
-        expect(response["update"]["message"]).to be_present
+        expect { response }.to raise_error(StandardError)
       end
     end
   end

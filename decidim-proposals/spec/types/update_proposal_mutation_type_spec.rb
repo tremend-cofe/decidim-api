@@ -8,12 +8,15 @@ module Decidim
     describe UpdateProposalType, type: :graphql do
       include_context "with a graphql class mutation"
 
+      let(:type_class) { Decidim::Proposals::UpdateProposalType }
       let(:root_klass) { ProposalMutationType }
       let(:organization) { create(:organization, available_locales: [:en]) }
+      let(:current_organization) { organization }
       let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
       let(:proposal_component) { create(:proposal_component, participatory_space: participatory_process) }
       let(:author) { create(:user, organization:) }
       let!(:model) { create(:proposal, component: proposal_component, users: [author]) }
+      let(:root_value) { model }
       let(:new_title) { "Updated proposal title for testing" }
       let(:new_body) { "This is an updated body content for the proposal that meets the minimum length requirements." }
       let(:component) { model.component }
@@ -30,7 +33,7 @@ module Decidim
       let(:query) do
         <<~GRAPHQL
           mutation($input: UpdateProposalInput!) {
-            update(input: $input) {
+            updateProposal(input: $input) {
               id
               title { translation(locale: "en") }
               body { translation(locale: "en") }
@@ -56,7 +59,7 @@ module Decidim
 
       context "with normal user (not author)" do
         it "returns nil" do
-          expect(response["update"]).to be_nil
+          expect(response["updateProposal"]).to be_nil
         end
       end
 
