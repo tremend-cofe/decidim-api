@@ -141,7 +141,6 @@ module Decidim
                   skip("This test is failing, but it is not in the scope of this PR.")
                   proposal_response = response["createProposal"]
 
-                  pp proposal_response
                   expect(proposal_response).to be_nil
                 end
               end
@@ -165,7 +164,6 @@ module Decidim
 
                   proposal_response = response["createProposal"]
 
-                  pp proposal_response
                   expect(proposal_response).to be_nil
                 end
               end
