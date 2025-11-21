@@ -75,7 +75,7 @@ module Decidim
           let(:current_user) { nil }
 
           it "returns nil" do
-            expect { response }.to raise_error(StandardError, /was hidden due to permissions/)
+            expect(response["createProposal"]).to be_nil
           end
         end
 
@@ -141,7 +141,6 @@ module Decidim
                   skip("This test is failing, but it iss not in the scope of this PR.")
                   proposal_response = response["createProposal"]
 
-                  pp proposal_response
                   expect(proposal_response).to be_nil
                 end
               end
@@ -165,7 +164,6 @@ module Decidim
 
                   proposal_response = response["createProposal"]
 
-                  pp proposal_response
                   expect(proposal_response).to be_nil
                 end
               end
@@ -205,7 +203,7 @@ module Decidim
           let!(:component) { create(:proposal_component, participatory_space: participatory_process) }
 
           it "returns nil" do
-            expect { response }.to raise_error(StandardError, /was hidden due to permissions/)
+            expect(response["createProposal"]).to be_nil
           end
         end
       end

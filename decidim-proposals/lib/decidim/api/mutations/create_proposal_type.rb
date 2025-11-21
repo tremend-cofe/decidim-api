@@ -35,10 +35,6 @@ module Decidim
                   I18n.t("proposals.publish.error", scope: "decidim")
                 )
               end
-
-              return GraphQL::ExecutionError.new(
-                I18n.t("proposals.publish.error", scope: "decidim")
-              )
             end
           end
 

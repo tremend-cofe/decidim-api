@@ -16,14 +16,17 @@ module Decidim
         address = attributes.to_h.fetch(:address, object.address)
         latitude = attributes.to_h.fetch(:latitude, object.latitude)
         longitude = attributes.to_h.fetch(:longitude, object.longitude)
+        taxonomies = attributes.to_h.fetch(:taxonomies, object.taxonomies)
 
         params = {
           title:,
           body:,
           address:,
           latitude:,
-          longitude:
+          longitude:,
+          taxonomies:
         }
+        params[:taxonomies] = Decidim::Taxonomy.where(id: params[:taxonomies]).pluck(:id) if params[:taxonomies]
 
         form = Decidim::Proposals::ProposalForm.from_params(
           params
