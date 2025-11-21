@@ -3,7 +3,7 @@
 module Decidim
   module Proposals
     class ProposalAttributes < Decidim::Api::Types::BaseInputObject
-      graphql_name "CreateProposalAttributes"
+      graphql_name "ProposalAttributes"
       description "Attributes for creating a proposal"
 
       argument :address, GraphQL::Types::String, description: "Physical address for the proposal", required: false

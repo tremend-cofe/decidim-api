@@ -8,7 +8,7 @@ module Decidim
       description "Updates a proposal"
       type Decidim::Proposals::ProposalType
 
-      argument :attributes, UpdateProposalAttributes, description: "Input attributes for updating a proposal", required: true
+      argument :attributes, ProposalAttributes, description: "Input attributes for updating a proposal", required: true
 
       def resolve(attributes:)
         title = attributes.to_h.fetch(:title, object.title)
@@ -16,7 +16,7 @@ module Decidim
         address = attributes.to_h.fetch(:address, object.address)
         latitude = attributes.to_h.fetch(:latitude, object.latitude)
         longitude = attributes.to_h.fetch(:longitude, object.longitude)
-        
+
         params = {
           title:,
           body:,

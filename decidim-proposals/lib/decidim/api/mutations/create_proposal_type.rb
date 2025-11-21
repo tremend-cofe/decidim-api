@@ -31,14 +31,26 @@ module Decidim
               end
 
               on(:invalid) do
-                raise GraphQL::ExecutionError, I18n.t("proposals.publish.error", scope: "decidim")
+                return GraphQL::ExecutionError.new(
+                  I18n.t("proposals.publish.error", scope: "decidim")
+                )
               end
+
+              return GraphQL::ExecutionError.new(
+                I18n.t("proposals.publish.error", scope: "decidim")
+              )
             end
           end
 
           on(:invalid) do
-            raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
+            return GraphQL::ExecutionError.new(
+              form.errors.full_messages.join(", ")
+            )
           end
+
+          GraphQL::ExecutionError.new(
+            I18n.t("decidim.proposals.create.error")
+          )
         end
       end
 
