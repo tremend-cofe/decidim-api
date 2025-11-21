@@ -62,7 +62,7 @@ module Decidim
 
       context "with api_user" do
         let!(:current_user) { author }
-        
+
         it_behaves_like "update proposal mutation examples" do
           let!(:user_type) { :api_user }
         end
