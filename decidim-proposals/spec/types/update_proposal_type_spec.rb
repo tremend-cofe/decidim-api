@@ -52,8 +52,10 @@ module Decidim
       end
 
       context "with admin user" do
-        it_behaves_like "update proposal mutation examples" do
-          let!(:user_type) { :admin }
+        let!(:user_type) { :admin }
+
+        it "does not update the proposal" do
+          expect(response["updateProposal"]).to be_nil
         end
       end
 

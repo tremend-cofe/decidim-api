@@ -56,10 +56,6 @@ module Decidim
       def authorized?(attributes:)
         super && allowed_to?(:edit, :proposal, object, context)
       end
-
-      def current_user
-        context[:current_user]
-      end
     end
   end
 end
