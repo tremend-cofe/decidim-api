@@ -2,7 +2,7 @@
 
 shared_examples "update proposal mutation examples" do
   context "when user is not authorized" do
-    let!(:user_type) { :user }
+    let!(:current_user) { nil }
 
     it "does not update the proposal" do
       expect(response["updateProposal"]).to be_nil
