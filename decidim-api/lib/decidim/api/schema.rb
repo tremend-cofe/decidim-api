@@ -15,13 +15,12 @@ module Decidim
 
       def self.unauthorized_object(error)
         # Add a top-level error to the response instead of returning nil:
-        Rails.logger.warn("[API] - An object of type #{error.type.graphql_name} was hidden due to permissions")
-        nil
+        raise GraphQL::ExecutionError, "An object of type #{error.type.graphql_name} was hidden due to permissions"
       end
 
       def self.unauthorized_field(error)
         # Add a top-level error to the response instead of returning nil:
-        Rails.logger.warn("[API] - The field #{error.field.graphql_name} on an object of type #{error.type.graphql_name} was hidden due to permissions")
+        raise GraphQL::ExecutionError, "The field #{error.field.graphql_name} on an object of type #{error.type.graphql_name} was hidden due to permissions"
       end
     end
   end
