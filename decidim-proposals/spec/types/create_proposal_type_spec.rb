@@ -75,7 +75,7 @@ module Decidim
           let(:current_user) { nil }
 
           it "returns nil" do
-            expect(response["createProposal"]).to be_nil
+            expect { response }.to raise_error(StandardError, "You cannot view createProposal field on CreateProposal because you do not have permission")
           end
         end
 
@@ -138,7 +138,7 @@ module Decidim
                 end
 
                 it "redirects to the authorization form" do
-                  skip("This test is failing, but it iss not in the scope of this PR.")
+                  skip("This test is failing, but it is not in the scope of this PR.")
                   proposal_response = response["createProposal"]
 
                   expect(proposal_response).to be_nil
@@ -160,7 +160,7 @@ module Decidim
                 end
 
                 it "redirects to pending onboarding authorizations page" do
-                  skip("This test is failing, but it iss not in the scope of this PR.")
+                  skip("This test is failing, but it is not in the scope of this PR.")
 
                   proposal_response = response["createProposal"]
 
@@ -203,7 +203,7 @@ module Decidim
           let!(:component) { create(:proposal_component, participatory_space: participatory_process) }
 
           it "returns nil" do
-            expect(response["createProposal"]).to be_nil
+            expect { response }.to raise_error(StandardError, "You cannot view createProposal field on CreateProposal because you do not have permission")
           end
         end
       end

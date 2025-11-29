@@ -42,14 +42,8 @@ module Decidim
             return proposal
           end
           on(:invalid) do
-            return GraphQL::ExecutionError.new(
-              form.errors.full_messages.join(", ")
-            )
+            raise GraphQL::ExecutionError.new(form.errors.full_messages.join(", "))
           end
-
-          GraphQL::ExecutionError.new(
-            I18n.t("decidim.proposals.update.error")
-          )
         end
       end
 
