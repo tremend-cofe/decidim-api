@@ -14,15 +14,11 @@ module Decidim
             return proposal
           end
           on(:has_votes) do
-            return GraphQL::ExecutionError.new(
+            raise GraphQL::ExecutionError.new(
               I18n.t("proposals.withdraw.errors.has_votes", scope: "decidim")
             )
           end
         end
-
-        GraphQL::ExecutionError.new(
-          I18n.t("decidim.proposals.withdraw.errors.generic", defa)
-        )
       end
 
       def authorized?
