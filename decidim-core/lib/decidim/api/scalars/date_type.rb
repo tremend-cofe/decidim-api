@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class DateType < Decidim::Api::Types::BaseScalar
+    class DateType < Decidim::Api::Types::Base::Scalar
       description "An ISO8601 date"
 
       def self.coerce_input(value, _ctx)

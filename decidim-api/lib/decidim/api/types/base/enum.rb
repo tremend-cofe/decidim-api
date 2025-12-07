@@ -3,7 +3,9 @@
 module Decidim
   module Api
     module Types
-      class BaseArgument < GraphQL::Schema::Argument
+      module Base
+        class Enum < GraphQL::Schema::Enum
+        end
       end
     end
   end

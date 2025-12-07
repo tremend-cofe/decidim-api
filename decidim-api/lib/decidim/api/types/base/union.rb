@@ -3,7 +3,9 @@
 module Decidim
   module Api
     module Types
-      class BaseEnum < GraphQL::Schema::Enum
+      module Base
+        class Union < GraphQL::Schema::Union
+        end
       end
     end
   end
