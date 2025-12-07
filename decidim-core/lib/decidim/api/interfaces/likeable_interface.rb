@@ -4,7 +4,7 @@ module Decidim
   module Core
     # This interface represents an object capable of likes.
     module LikeableInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
       description "An interface that can be used in objects with likes"
 
       field :likes, [Decidim::Core::AuthorInterface, { null: true }], "The likes of this object", null: false

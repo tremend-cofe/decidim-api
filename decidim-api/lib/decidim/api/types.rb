@@ -15,12 +15,11 @@ module Decidim
         autoload :Enum, "decidim/api/types/base/enum"
         autoload :Field, "decidim/api/types/base/field"
         autoload :InputObject, "decidim/api/types/base/input_object"
+        autoload :Interface, "decidim/api/types/base/interface"
         autoload :Mutation, "decidim/api/types/base/mutation"
         autoload :Scalar, "decidim/api/types/base/scalar"
         autoload :Union, "decidim/api/types/base/union"
       end
-
-      autoload :BaseInterface, "decidim/api/types/base_interface"
       autoload :BaseObject, "decidim/api/types/base_object"
     end
   end

@@ -4,7 +4,7 @@ module Decidim
   module Core
     # This interface represents a localizable (that has address, latitude and longitude) object.
     module LocalizableInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
       description "An interface that can be used in localizable objects."
 
       field :address, GraphQL::Types::String, "The physical address (location) of this result", null: true

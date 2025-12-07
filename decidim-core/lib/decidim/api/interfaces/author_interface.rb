@@ -4,7 +4,7 @@ module Decidim
   module Core
     # This interface represents an author who owns a resource.
     module AuthorInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
       graphql_name "Author"
       description "An author"
 

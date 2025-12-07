@@ -6,7 +6,7 @@ module Decidim
     # It create and array of linked participatory spaces for each registered manifest
 
     module ParticipatorySpaceResourceableInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
 
       # name "ParticipatorySpaceResourcableInterface"
       description "An interface that can be used in objects with participatorySpaceResourceable"

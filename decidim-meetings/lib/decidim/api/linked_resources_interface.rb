@@ -4,7 +4,7 @@ module Decidim
   module Meetings
     # This interface represents all linked resources available in the module meetings
     module LinkedResourcesInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
       graphql_name "MeetingsLinkedResourcesInterface"
       description "An interface that can be used with Resourceable models."
 
