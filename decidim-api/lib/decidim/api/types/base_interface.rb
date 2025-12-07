@@ -6,7 +6,7 @@ module Decidim
       module BaseInterface
         include GraphQL::Schema::Interface
 
-        field_class Types::BaseField
+        field_class Decidim::Api::Types::Base::Field
       end
     end
   end

@@ -7,7 +7,7 @@ module Decidim
         include Decidim::Api::GraphqlPermissions
 
         object_class BaseObject
-        field_class Types::BaseField
+        field_class Decidim::Api::Types::Base::Field
         input_object_class BaseInputObject
 
         required_scopes "api:read", "api:write"

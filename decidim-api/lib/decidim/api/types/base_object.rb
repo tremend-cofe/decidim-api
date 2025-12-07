@@ -7,7 +7,7 @@ module Decidim
         include Decidim::Api::RequiredScopes
         include Decidim::Api::GraphqlPermissions
 
-        field_class Types::BaseField
+        field_class Decidim::Api::Types::Base::Field
 
         required_scopes "api:read"
       end
