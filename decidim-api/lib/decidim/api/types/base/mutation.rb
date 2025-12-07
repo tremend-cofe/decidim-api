@@ -9,7 +9,7 @@ module Decidim
 
           object_class BaseObject
           field_class Decidim::Api::Types::Base::Field
-          input_object_class BaseInputObject
+          input_object_class Decidim::Api::Types::Base::InputObject
 
           required_scopes "api:read", "api:write"
         end
