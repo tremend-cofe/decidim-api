@@ -3,7 +3,7 @@
 module Decidim
   module Api
     # This type represents the root mutation type of the whole API
-    class MutationType < Decidim::Api::Types::BaseObject
+    class MutationType < Decidim::Api::Types::Base::Object
       description "The root mutation of this schema"
 
       required_scopes "api:write"

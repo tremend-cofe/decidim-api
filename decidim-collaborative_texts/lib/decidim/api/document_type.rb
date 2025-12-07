@@ -2,7 +2,7 @@
 
 module Decidim
   module CollaborativeTexts
-    class DocumentType < Decidim::Api::Types::BaseObject
+    class DocumentType < Decidim::Api::Types::Base::Object
       graphql_name "CollaborativeText"
       description "A collaborative text document."
 

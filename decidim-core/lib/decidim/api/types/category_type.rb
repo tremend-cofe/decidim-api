@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class CategoryType < Decidim::Api::Types::BaseObject
+    class CategoryType < Decidim::Api::Types::Base::Object
       description "A category that can be applied to other resources."
 
       field :id, GraphQL::Types::ID, "The id for this category", null: false

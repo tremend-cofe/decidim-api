@@ -2,7 +2,7 @@
 
 module Decidim
   module CollaborativeTexts
-    class VersionType < Decidim::Api::Types::BaseObject
+    class VersionType < Decidim::Api::Types::Base::Object
       graphql_name "DocumentVersion"
       description "A specific version for a collaborative text document."
 

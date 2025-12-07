@@ -2,7 +2,7 @@
 
 module Decidim
   module Accountability
-    class StatusType < Decidim::Api::Types::BaseObject
+    class StatusType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
       implements Decidim::Core::TraceableInterface
 

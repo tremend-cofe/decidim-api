@@ -3,7 +3,7 @@
 module Decidim
   module Initiatives
     # This type represents an initiative committee member.
-    class InitiativeCommitteeMemberType < Decidim::Api::Types::BaseObject
+    class InitiativeCommitteeMemberType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
 
       graphql_name "InitiativeCommitteeMemberType"

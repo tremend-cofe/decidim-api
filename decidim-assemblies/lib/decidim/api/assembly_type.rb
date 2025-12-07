@@ -3,7 +3,7 @@
 module Decidim
   module Assemblies
     # This type represents an Assembly.
-    class AssemblyType < Decidim::Api::Types::BaseObject
+    class AssemblyType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::ParticipatorySpaceInterface
       implements Decidim::Core::AttachableInterface
       implements Decidim::Core::AttachableCollectionInterface

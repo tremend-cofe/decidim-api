@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class AmendmentType < Decidim::Api::Types::BaseObject
+    class AmendmentType < Decidim::Api::Types::Base::Object
       description "An amendment"
 
       field :amendable, AmendableEntityInterface, "The original amended resource (currently, a proposal only)", null: false

@@ -3,7 +3,7 @@
 module Decidim
   module ParticipatoryProcesses
     # This type represents a ParticipatoryProcess.
-    class ParticipatoryProcessGroupType < Decidim::Api::Types::BaseObject
+    class ParticipatoryProcessGroupType < Decidim::Api::Types::Base::Object
       description "A participatory process group"
 
       implements Decidim::Core::TimestampsInterface

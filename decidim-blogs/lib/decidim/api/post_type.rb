@@ -3,7 +3,7 @@
 module Decidim
   module Blogs
     # This type represents a Post.
-    class PostType < Decidim::Api::Types::BaseObject
+    class PostType < Decidim::Api::Types::Base::Object
       implements Decidim::Comments::CommentableInterface
       implements Decidim::Core::AttachableInterface
       implements Decidim::Core::AuthorableInterface

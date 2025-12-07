@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class QuantifiableTranslatedFieldType < Decidim::Api::Types::BaseObject
+    class QuantifiableTranslatedFieldType < Decidim::Api::Types::Base::Object
       description "A quantifiable translated field with singular and plural formats"
 
       field :plural, Decidim::Core::TranslatedFieldType, "The plural format.", null: false

@@ -3,7 +3,7 @@
 module Decidim
   module Comments
     # This type represents a comment on a commentable object.
-    class CommentType < Decidim::Api::Types::BaseObject
+    class CommentType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
       implements Decidim::Comments::CommentableInterface
 

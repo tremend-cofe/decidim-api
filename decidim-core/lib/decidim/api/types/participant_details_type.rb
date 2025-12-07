@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class ParticipantDetailsType < Decidim::Api::Types::BaseObject
+    class ParticipantDetailsType < Decidim::Api::Types::Base::Object
       description "details of a participant"
 
       field :email, GraphQL::Types::String, "The user's email", null: false

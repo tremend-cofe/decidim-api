@@ -3,7 +3,7 @@
 module Decidim
   module Conferences
     # This type represents a registration type
-    class ConferenceRegistrationTypeType < Decidim::Api::Types::BaseObject
+    class ConferenceRegistrationTypeType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
 
       description "A conference registration type"

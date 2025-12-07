@@ -2,7 +2,7 @@
 
 module Decidim
   module Initiatives
-    class InitiativeApiType < Decidim::Api::Types::BaseObject
+    class InitiativeApiType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
 
       graphql_name "InitiativeType"

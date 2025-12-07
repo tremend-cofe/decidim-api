@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a user moderation
-    class UserModerationType < Decidim::Api::Types::BaseObject
+    class UserModerationType < Decidim::Api::Types::Base::Object
       description "A moderated user detail"
 
       implements Decidim::Core::TimestampsInterface

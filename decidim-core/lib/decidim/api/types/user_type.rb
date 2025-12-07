@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a User.
-    class UserType < Decidim::Api::Types::BaseObject
+    class UserType < Decidim::Api::Types::Base::Object
       description "A user"
 
       implements Decidim::Core::AuthorInterface

@@ -2,7 +2,7 @@
 
 module Decidim
   module Meetings
-    class AgendaItemType < Decidim::Api::Types::BaseObject
+    class AgendaItemType < Decidim::Api::Types::Base::Object
       graphql_name "MeetingAgendaItem"
       description "A meeting agenda item"
 

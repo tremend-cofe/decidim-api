@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class ParticipatorySpaceLinkType < Decidim::Api::Types::BaseObject
+    class ParticipatorySpaceLinkType < Decidim::Api::Types::Base::Object
       description "A link representation between participatory spaces"
 
       field :from_type, GraphQL::Types::String, "The origin participatory space type for this participatory space link", null: false

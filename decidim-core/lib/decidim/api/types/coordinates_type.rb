@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a Decidim's global property.
-    class CoordinatesType < Decidim::Api::Types::BaseObject
+    class CoordinatesType < Decidim::Api::Types::Base::Object
       description "Physical coordinates for a location"
 
       field :latitude, GraphQL::Types::Float, "Latitude of this coordinate", null: false

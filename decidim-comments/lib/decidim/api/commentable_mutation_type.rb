@@ -2,7 +2,7 @@
 
 module Decidim
   module Comments
-    class CommentableMutationType < Decidim::Api::Types::BaseObject
+    class CommentableMutationType < Decidim::Api::Types::Base::Object
       description "A commentable which includes its available mutations"
 
       field :add_comment, Decidim::Comments::CommentType, description: "Add a new comment to a commentable", null: true do

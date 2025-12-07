@@ -2,7 +2,7 @@
 
 module Decidim
   module Proposals
-    class ProposalMutationType < Decidim::Api::Types::BaseObject
+    class ProposalMutationType < Decidim::Api::Types::Base::Object
       include Decidim::ApiResponseHelper
 
       graphql_name "ProposalMutation"

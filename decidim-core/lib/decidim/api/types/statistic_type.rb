@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class StatisticType < Decidim::Api::Types::BaseObject
+    class StatisticType < Decidim::Api::Types::Base::Object
       description "Represents a single statistic"
 
       field :description, Decidim::Core::TranslatedFieldType, "The description of the statistic calculation", null: true

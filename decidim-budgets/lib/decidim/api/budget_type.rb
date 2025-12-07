@@ -2,7 +2,7 @@
 
 module Decidim
   module Budgets
-    class BudgetType < Decidim::Api::Types::BaseObject
+    class BudgetType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
       implements Decidim::Core::TraceableInterface
       implements Decidim::Core::TaxonomizableInterface

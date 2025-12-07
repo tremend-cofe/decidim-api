@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a content report
-    class ReportableType < Decidim::Api::Types::BaseObject
+    class ReportableType < Decidim::Api::Types::Base::Object
       description "A report object"
 
       implements Decidim::Core::TimestampsInterface

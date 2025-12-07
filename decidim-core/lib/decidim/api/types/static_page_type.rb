@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a page
-    class StaticPageType < Decidim::Api::Types::BaseObject
+    class StaticPageType < Decidim::Api::Types::Base::Object
       description "The current organization static pages"
 
       implements Decidim::Core::TimestampsInterface

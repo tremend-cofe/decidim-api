@@ -2,7 +2,7 @@
 
 module Decidim
   module Meetings
-    class AgendaType < Decidim::Api::Types::BaseObject
+    class AgendaType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
 
       graphql_name "MeetingAgenda"

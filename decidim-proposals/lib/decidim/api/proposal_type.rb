@@ -2,7 +2,7 @@
 
 module Decidim
   module Proposals
-    class ProposalType < Decidim::Api::Types::BaseObject
+    class ProposalType < Decidim::Api::Types::Base::Object
       include ActiveSupport::NumberHelper
 
       description "A proposal"

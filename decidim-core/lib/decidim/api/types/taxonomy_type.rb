@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class TaxonomyType < Decidim::Api::Types::BaseObject
+    class TaxonomyType < Decidim::Api::Types::Base::Object
       description "A taxonomy that can be applied to other resources."
 
       field :children, [Decidim::Core::TaxonomyType], "The children of this taxonomy.", null: false

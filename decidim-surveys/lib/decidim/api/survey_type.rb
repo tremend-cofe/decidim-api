@@ -2,7 +2,7 @@
 
 module Decidim
   module Surveys
-    class SurveyType < Decidim::Api::Types::BaseObject
+    class SurveyType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
 
       description "A survey"

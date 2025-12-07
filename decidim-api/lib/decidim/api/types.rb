@@ -17,10 +17,10 @@ module Decidim
         autoload :InputObject, "decidim/api/types/base/input_object"
         autoload :Interface, "decidim/api/types/base/interface"
         autoload :Mutation, "decidim/api/types/base/mutation"
+        autoload :Object, "decidim/api/types/base/object"
         autoload :Scalar, "decidim/api/types/base/scalar"
         autoload :Union, "decidim/api/types/base/union"
       end
-      autoload :BaseObject, "decidim/api/types/base_object"
     end
   end
 end

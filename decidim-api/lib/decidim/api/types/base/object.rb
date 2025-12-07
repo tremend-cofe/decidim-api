@@ -4,14 +4,13 @@ module Decidim
   module Api
     module Types
       module Base
-        class Mutation < GraphQL::Schema::RelayClassicMutation
+        class Object < GraphQL::Schema::Object
+          include Decidim::Api::RequiredScopes
           include Decidim::Api::GraphqlPermissions
 
-          object_class Decidim::Api::Types::Base::Object
           field_class Decidim::Api::Types::Base::Field
-          input_object_class Decidim::Api::Types::Base::InputObject
 
-          required_scopes "api:read", "api:write"
+          required_scopes "api:read"
         end
       end
     end
