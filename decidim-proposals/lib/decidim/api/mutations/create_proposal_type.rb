@@ -43,11 +43,11 @@ module Decidim
       end
 
       def authorized?(attributes:)
-        if super && allowed_to?(:create, :proposal, Decidim::Proposals::Proposal.new(component: current_component), { current_user:, current_component: })
-          true
-        else
-          raise Decidim::Api::Errors::MutationNotAuthorizedError,  I18n.t("decidim.api.errors.unauthorized_field")
+        unless super && allowed_to?(:create, :proposal, Decidim::Proposals::Proposal.new(component: current_component), { current_user:, current_component: })
+          raise Decidim::Api::Errors::MutationNotAuthorizedError, I18n.t("decidim.api.errors.unauthorized_field")
         end
+
+        true
       end
     end
   end
