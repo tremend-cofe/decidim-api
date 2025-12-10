@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents an attachment collection
-    class AttachmentCollectionType < Decidim::Api::Types::BaseObject
+    class AttachmentCollectionType < Decidim::Api::Types::Base::Object
       description "A file attachment collection"
 
       field :attachments, [Decidim::Core::AttachmentType, { null: true }], "This object's attachments", null: false

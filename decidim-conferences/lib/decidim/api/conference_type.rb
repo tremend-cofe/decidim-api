@@ -3,7 +3,7 @@
 module Decidim
   module Conferences
     # This type represents a conference.
-    class ConferenceType < Decidim::Api::Types::BaseObject
+    class ConferenceType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::ParticipatorySpaceInterface
       implements Decidim::Core::ScopableInterface
       implements Decidim::Core::AttachableInterface

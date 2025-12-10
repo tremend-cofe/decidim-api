@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class DateTimeType < Decidim::Api::Types::BaseScalar
+    class DateTimeType < Decidim::Api::Types::Base::Scalar
       description "An ISO8601 date with time"
 
       def self.coerce_input(value, _ctx)

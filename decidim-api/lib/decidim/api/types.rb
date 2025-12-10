@@ -14,15 +14,17 @@ module Decidim
     end
 
     module Types
-      autoload :BaseArgument, "decidim/api/types/base_argument"
-      autoload :BaseEnum, "decidim/api/types/base_enum"
-      autoload :BaseField, "decidim/api/types/base_field"
-      autoload :BaseInputObject, "decidim/api/types/base_input_object"
-      autoload :BaseInterface, "decidim/api/types/base_interface"
-      autoload :BaseMutation, "decidim/api/types/base_mutation"
-      autoload :BaseObject, "decidim/api/types/base_object"
-      autoload :BaseScalar, "decidim/api/types/base_scalar"
-      autoload :BaseUnion, "decidim/api/types/base_union"
+      module Base
+        autoload :Argument, "decidim/api/types/base/argument"
+        autoload :Enum, "decidim/api/types/base/enum"
+        autoload :Field, "decidim/api/types/base/field"
+        autoload :InputObject, "decidim/api/types/base/input_object"
+        autoload :Interface, "decidim/api/types/base/interface"
+        autoload :Mutation, "decidim/api/types/base/mutation"
+        autoload :Object, "decidim/api/types/base/object"
+        autoload :Scalar, "decidim/api/types/base/scalar"
+        autoload :Union, "decidim/api/types/base/union"
+      end
     end
   end
 end

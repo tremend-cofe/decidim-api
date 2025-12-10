@@ -3,7 +3,9 @@
 module Decidim
   module Api
     module Types
-      class BaseUnion < GraphQL::Schema::Union
+      module Base
+        class Scalar < GraphQL::Schema::Scalar
+        end
       end
     end
   end

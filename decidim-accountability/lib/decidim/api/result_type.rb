@@ -2,7 +2,7 @@
 
 module Decidim
   module Accountability
-    class ResultType < Decidim::Api::Types::BaseObject
+    class ResultType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::ReferableInterface
       implements Decidim::Comments::CommentableInterface
       implements Decidim::Core::AttachableInterface

@@ -2,7 +2,7 @@
 
 module Decidim
   module Pages
-    class PageType < Decidim::Api::Types::BaseObject
+    class PageType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
 
       description "A page"

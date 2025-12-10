@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class BadgeScoreType < Decidim::Api::Types::BaseObject
+    class BadgeScoreType < Decidim::Api::Types::Base::Object
       description "An user badge score"
 
       field :description, GraphQL::Types::String, "The description of this badge", null: false

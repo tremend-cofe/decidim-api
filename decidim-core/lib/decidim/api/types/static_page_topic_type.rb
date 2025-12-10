@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a topic's page
-    class StaticPageTopicType < Decidim::Api::Types::BaseObject
+    class StaticPageTopicType < Decidim::Api::Types::Base::Object
       description "The current organization static page topics"
 
       field :description, Decidim::Core::TranslatedFieldType, "The description of this static page topic", null: false

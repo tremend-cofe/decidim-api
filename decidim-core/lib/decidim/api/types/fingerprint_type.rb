@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class FingerprintType < Decidim::Api::Types::BaseObject
+    class FingerprintType < Decidim::Api::Types::Base::Object
       description "A fingerprint object"
 
       field :source, GraphQL::Types::String, description: "Returns the source String (usually a json) from which the fingerprint is generated.", null: false

@@ -2,7 +2,7 @@
 
 module Decidim
   module Comments
-    class CommentMutationType < Decidim::Api::Types::BaseObject
+    class CommentMutationType < Decidim::Api::Types::Base::Object
       graphql_name "CommentMutation"
       description "A comment which includes its available mutations"
 

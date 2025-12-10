@@ -2,7 +2,7 @@
 
 module Decidim
   module Proposals
-    class AnswerProposalAttributes < Decidim::Api::Types::BaseInputObject
+    class AnswerProposalAttributes < Decidim::Api::Types::Base::InputObject
       graphql_name "ProposalAttributes"
       description "Attributes of a proposal"
 

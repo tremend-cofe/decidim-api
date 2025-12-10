@@ -4,7 +4,7 @@ module Decidim
   module Core
     # This interface represents a resource that contains categories.
     module CategoriesContainerInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
       description "An interface that can be used in objects that contain categories."
 
       field :categories, [Decidim::Core::CategoryType, { null: true }], "Categories for this space", null: false do

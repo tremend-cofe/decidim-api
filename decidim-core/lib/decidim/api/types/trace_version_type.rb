@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class TraceVersionType < Decidim::Api::Types::BaseObject
+    class TraceVersionType < Decidim::Api::Types::Base::Object
       description "A trace version type"
 
       field :changeset, GraphQL::Types::JSON, description: "Object with the changes in this version", null: true

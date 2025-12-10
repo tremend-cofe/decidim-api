@@ -3,7 +3,7 @@
 module Decidim
   module Conferences
     # This type represents a conference.
-    class ConferenceSpeakerType < Decidim::Api::Types::BaseObject
+    class ConferenceSpeakerType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::TimestampsInterface
 
       description "A conference speaker"

@@ -4,7 +4,7 @@ module Decidim
   module Comments
     # This interface represents a commentable object.
     module CommentableInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
       description "A commentable interface"
 
       field :accepts_new_comments, GraphQL::Types::Boolean, "Whether the object can have new comments or not", method: :accepts_new_comments?, null: false

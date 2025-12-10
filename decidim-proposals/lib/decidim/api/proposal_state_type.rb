@@ -2,7 +2,7 @@
 
 module Decidim
   module Proposals
-    class ProposalStateType < Decidim::Api::Types::BaseObject
+    class ProposalStateType < Decidim::Api::Types::Base::Object
       description "A proposal state"
 
       field :announcement_title, Decidim::Core::TranslatedFieldType, "The announcement for this proposal state", null: true

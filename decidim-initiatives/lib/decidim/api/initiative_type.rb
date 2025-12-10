@@ -3,7 +3,7 @@
 module Decidim
   module Initiatives
     # This type represents a Initiative.
-    class InitiativeType < Decidim::Api::Types::BaseObject
+    class InitiativeType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::ParticipatorySpaceInterface
       implements Decidim::Core::ScopableInterface
       implements Decidim::Core::AttachableInterface

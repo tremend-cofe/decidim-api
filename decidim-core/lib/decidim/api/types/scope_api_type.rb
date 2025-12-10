@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class ScopeApiType < Decidim::Api::Types::BaseObject
+    class ScopeApiType < Decidim::Api::Types::Base::Object
       graphql_name "Scope"
       description "A scope"
 

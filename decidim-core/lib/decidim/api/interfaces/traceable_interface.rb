@@ -4,7 +4,7 @@ module Decidim
   module Core
     # This interface represents an traceable object.
     module TraceableInterface
-      include Decidim::Api::Types::BaseInterface
+      include Decidim::Api::Types::Base::Interface
       description "An interface that can be used in objects with traceability (versions)"
 
       field :versions, [Decidim::Core::TraceVersionType, { null: true }], "This object's versions", null: false

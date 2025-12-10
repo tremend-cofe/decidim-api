@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class ParticipatorySpaceManifestType < Decidim::Api::Types::BaseObject
+    class ParticipatorySpaceManifestType < Decidim::Api::Types::Base::Object
       description "A participatory manifest"
 
       field :human_name, Decidim::Core::QuantifiableTranslatedFieldType, "The human readable name for the manifest", null: false

@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a content moderation record
-    class ModerationType < Decidim::Api::Types::BaseObject
+    class ModerationType < Decidim::Api::Types::Base::Object
       description "A moderation detail"
 
       implements Decidim::Core::TimestampsInterface

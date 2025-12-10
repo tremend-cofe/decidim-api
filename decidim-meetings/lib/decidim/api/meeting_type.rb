@@ -2,7 +2,7 @@
 
 module Decidim
   module Meetings
-    class MeetingType < Decidim::Api::Types::BaseObject
+    class MeetingType < Decidim::Api::Types::Base::Object
       description "A meeting"
 
       implements Decidim::Comments::CommentableInterface

@@ -3,7 +3,7 @@
 module Decidim
   module Core
     # This type represents a Decidim's global property.
-    class DecidimType < Decidim::Api::Types::BaseObject
+    class DecidimType < Decidim::Api::Types::Base::Object
       description "Decidim's framework-related properties."
 
       field :application_name, GraphQL::Types::String, "The current installation's name.", null: false

@@ -2,7 +2,7 @@
 
 module Decidim
   module CollaborativeTexts
-    class SuggestionType < Decidim::Api::Types::BaseObject
+    class SuggestionType < Decidim::Api::Types::Base::Object
       description "A suggestion for a collaborative text document version."
 
       implements Decidim::Core::TraceableInterface

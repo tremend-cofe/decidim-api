@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class ComponentType < Decidim::Api::Types::BaseObject
+    class ComponentType < Decidim::Api::Types::Base::Object
       implements Decidim::Core::ComponentInterface
       description "A base component with no particular specificities."
 

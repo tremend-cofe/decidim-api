@@ -2,7 +2,7 @@
 
 module Decidim
   module Core
-    class OrganizationType < Decidim::Api::Types::BaseObject
+    class OrganizationType < Decidim::Api::Types::Base::Object
       description "The current organization"
 
       field :name, Decidim::Core::TranslatedFieldType, "The name of the current organization", null: true

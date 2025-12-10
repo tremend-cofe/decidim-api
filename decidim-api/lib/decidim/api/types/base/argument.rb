@@ -3,7 +3,9 @@
 module Decidim
   module Api
     module Types
-      class BaseScalar < GraphQL::Schema::Scalar
+      module Base
+        class Argument < GraphQL::Schema::Argument
+        end
       end
     end
   end

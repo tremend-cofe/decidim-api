@@ -2,7 +2,7 @@
 
 module Decidim
   module Proposals
-    class ProposalAnswerType < Decidim::Api::Types::BaseMutation
+    class ProposalAnswerType < Decidim::Api::Types::Base::Mutation
       graphql_name "Answer"
 
       description "Answers a proposal"

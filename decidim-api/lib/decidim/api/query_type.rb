@@ -3,7 +3,7 @@
 module Decidim
   module Api
     # This type represents the root query type of the whole API.
-    class QueryType < Decidim::Api::Types::BaseObject
+    class QueryType < Decidim::Api::Types::Base::Object
       description "The root query of this schema"
     end
   end

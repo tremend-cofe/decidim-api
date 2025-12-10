@@ -2,7 +2,7 @@
 
 module Decidim
   module Forms
-    class ResponseOptionType < Decidim::Api::Types::BaseObject
+    class ResponseOptionType < Decidim::Api::Types::Base::Object
       description "An response option for a multi-choice question in a questionnaire"
 
       field :body, Decidim::Core::TranslatedFieldType, "The response option text.", null: false
