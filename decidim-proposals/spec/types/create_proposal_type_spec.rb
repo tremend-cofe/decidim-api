@@ -83,6 +83,7 @@ module Decidim
           context "with creation enabled" do
             let!(:component) do
               create(:proposal_component,
+                     :published,
                      :with_creation_enabled,
                      participatory_space: participatory_process,
                      settings: {
@@ -104,6 +105,7 @@ module Decidim
               let!(:component) do
                 create(:proposal_component,
                        :with_creation_enabled,
+                       :published,
                        participatory_space: participatory_process,
                        settings: {
                          geocoding_enabled: true,
@@ -112,6 +114,8 @@ module Decidim
               end
 
               it "creates a new proposal" do
+                pp response
+
                 proposal_response = response["createProposal"]
 
                 expect(proposal_response).to be_present
@@ -203,7 +207,7 @@ module Decidim
           let!(:component) { create(:proposal_component, participatory_space: participatory_process) }
 
           it "returns nil" do
-            expect { response }.to raise_error(StandardError, "You cannot view createProposal field on CreateProposal because you do not have permission")
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You cannot view createProposal field on CreateProposal because you do not have permission")
           end
         end
       end

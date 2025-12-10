@@ -10,6 +10,8 @@ module Decidim
     autoload :ComponentMutationType, "decidim/api/component_mutation_type"
 
     module Errors
+      autoload :MutationNotAuthorizedError, "decidim/api/errors/mutation_not_authorized_error"
+      autoload :ValidationError, "decidim/api/errors/validation_error"
       autoload :NotFoundError, "decidim/api/errors/not_found_error"
     end
 

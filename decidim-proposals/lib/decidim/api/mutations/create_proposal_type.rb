@@ -31,26 +31,23 @@ module Decidim
               end
 
               on(:invalid) do
-                raise GraphQL::ExecutionError, I18n.t("proposals.publish.error", scope: "decidim")
+                raise Decidim::Api::Errors::ValidationError, I18n.t("proposals.publish.error", scope: "decidim")
               end
             end
           end
 
           on(:invalid) do
-            raise GraphQL::ExecutionError, form.errors.full_messages.join(", ")
+            raise Decidim::Api::Errors::ValidationError, form.errors.full_messages.join(", ")
           end
-
-          GraphQL::ExecutionError.new(
-            I18n.t("decidim.proposals.create.error")
-          )
         end
       end
 
       def authorized?(attributes:)
-        # component = object.is_a?(Decidim::Component) ? object : context[:current_component]
-        # return false unless component
-
-        super && allowed_to?(:create, :proposal, Decidim::Proposals::Proposal.new(component: current_component), { current_user:, current_component: })
+        if super && allowed_to?(:create, :proposal, Decidim::Proposals::Proposal.new(component: current_component), { current_user:, current_component: })
+          true
+        else
+          raise Decidim::Api::Errors::MutationNotAuthorizedError,  I18n.t("decidim.api.errors.unauthorized_field")
+        end
       end
     end
   end
