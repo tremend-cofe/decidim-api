@@ -75,7 +75,7 @@ module Decidim
           let(:current_user) { nil }
 
           it "returns nil" do
-            expect { response }.to raise_error(StandardError, "You cannot view createProposal field on CreateProposal because you do not have permission")
+            expect { response }.to raise_error(Decidim::Api::Errors::PermissionNotSetError, "Permission has not been set for this action")
           end
         end
 
@@ -114,8 +114,6 @@ module Decidim
               end
 
               it "creates a new proposal" do
-                pp response
-
                 proposal_response = response["createProposal"]
 
                 expect(proposal_response).to be_present
@@ -207,7 +205,7 @@ module Decidim
           let!(:component) { create(:proposal_component, participatory_space: participatory_process) }
 
           it "returns nil" do
-            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You cannot view createProposal field on CreateProposal because you do not have permission")
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You are not authorized to access this mutation")
           end
         end
       end

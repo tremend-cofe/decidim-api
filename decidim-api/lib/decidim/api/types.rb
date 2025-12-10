@@ -11,8 +11,9 @@ module Decidim
 
     module Errors
       autoload :MutationNotAuthorizedError, "decidim/api/errors/mutation_not_authorized_error"
-      autoload :ValidationError, "decidim/api/errors/validation_error"
       autoload :NotFoundError, "decidim/api/errors/not_found_error"
+      autoload :PermissionNotSetError, "decidim/api/errors/permission_not_set_error"
+      autoload :ValidationError, "decidim/api/errors/validation_error"
     end
 
     module Types

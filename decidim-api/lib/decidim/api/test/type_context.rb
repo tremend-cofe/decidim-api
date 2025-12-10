@@ -36,6 +36,8 @@ shared_context "with a graphql class type" do
       raise Decidim::Api::Errors::ValidationError, error["message"]
     when "MUTATION_NOT_AUTHORIZED"
       raise Decidim::Api::Errors::MutationNotAuthorizedError, error["message"]
+    when "NO_PERMISSION_SET"
+      raise Decidim::Api::Errors::PermissionNotSetError, error["message"]
     when "NOT_FOUND"
       raise Decidim::Api::Errors::NotFoundError, error["message"]
     else

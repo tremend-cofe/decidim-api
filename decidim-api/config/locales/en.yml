@@ -5,3 +5,4 @@ en:
       errors:
         unauthorized_field: You are not authorized to access this mutation
         not_found: "%{type} not found"
+        permission_not_set: Permission has not been set for this action
