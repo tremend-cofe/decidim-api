@@ -275,8 +275,33 @@ describe "Decidim::Api::QueryType" do
         context "when user is visitor" do
           let!(:current_user) { nil }
 
+          let(:component_fragment) do
+            %(
+      fragment fooComponent on Budgets {
+        budget(id: #{budget.id}) {
+          createdAt
+          description {
+            translation(locale:"#{locale}")
+          }
+          id
+          title {
+            translation(locale:"#{locale}")
+          }
+          total_budget
+          updatedAt
+          url
+          versions {
+            id
+          }
+          versionsCount
+          weight
+        }
+      }
+    )
+          end
+
           it "should be visible" do
-            expect(response["participatoryProcess"]["components"].first[lookout_key]).to eq(query_result.merge("projects" => [nil, nil]))
+            expect(response["participatoryProcess"]["components"].first[lookout_key]).to eq(query_result.except("projects"))
           end
         end
 
@@ -417,8 +442,41 @@ describe "Decidim::Api::QueryType" do
         context "when user is visitor" do
           let!(:current_user) { nil }
 
+          let(:component_fragment) do
+            %(
+      fragment fooComponent on Budgets {
+        budget(id: #{budget.id}) {
+          createdAt
+          description {
+            translation(locale:"#{locale}")
+          }
+          id
+          title {
+            translation(locale:"#{locale}")
+          }
+          total_budget
+          updatedAt
+          url
+          versions {
+            id
+          }
+          versionsCount
+          weight
+        }
+      }
+    )
+          end
+
           it "is visible" do
-            expect(response["assembly"]["components"].first[lookout_key]).to eq(query_result.merge("projects" => [nil, nil]))
+            expect(response["assembly"]["components"].first[lookout_key]).to eq(query_result.except("projects"))
+          end
+        end
+
+        context "when user is visitor and requests projects that is not supposed to see" do
+          let!(:current_user) { nil }
+
+          it "throws Decidim::Api::Errors::PermissionNotSetError" do
+            expect { response }.to raise_error(Decidim::Api::Errors::PermissionNotSetError, "Permission has not been set for this action")
           end
         end
 
