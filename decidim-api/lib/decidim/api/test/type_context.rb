@@ -32,6 +32,8 @@ shared_context "with a graphql class type" do
     code = error.dig("extensions", "code")
 
     case code
+    when "ATTRIBUTE_VALIDATION_ERROR"
+      raise Decidim::Api::Errors::AttributeValidationError, error["message"]
     when "VALIDATION_ERROR"
       raise Decidim::Api::Errors::ValidationError, error["message"]
     when "MUTATION_NOT_AUTHORIZED"

@@ -179,7 +179,7 @@ module Decidim
               let(:title) { "" }
 
               it "raises an error" do
-                expect { response }.to raise_error(StandardError, /too short/)
+                expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
               end
             end
 
@@ -187,7 +187,7 @@ module Decidim
               let(:title) { "Short" }
 
               it "raises an error" do
-                expect { response }.to raise_error(StandardError, /too short/)
+                expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
               end
             end
           end
@@ -196,7 +196,7 @@ module Decidim
             let(:body) { "Short" }
 
             it "raises an error" do
-              expect { response }.to raise_error(StandardError, /too short/)
+              expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
             end
           end
         end
