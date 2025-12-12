@@ -42,6 +42,10 @@ shared_context "with a graphql class type" do
       raise Decidim::Api::Errors::PermissionNotSetError, error["message"]
     when "NOT_FOUND"
       raise Decidim::Api::Errors::NotFoundError, error["message"]
+    when "NO_FIELD_PERMISSION"
+      raise Decidim::Api::Errors::UnauthorizedFieldError, error["message"]
+    when "NO_OBJECT_PERMISSION"
+      raise Decidim::Api::Errors::UnauthorizedObjectError, error["message"]
     else
       raise StandardError, error["message"]
     end
