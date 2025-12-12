@@ -74,8 +74,8 @@ module Decidim
         context "when the user is not logged in" do
           let(:current_user) { nil }
 
-          it "returns nil" do
-            expect { response }.to raise_error(Decidim::Api::Errors::PermissionNotSetError, "Permission has not been set for this action")
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
 
@@ -204,8 +204,8 @@ module Decidim
         context "when the creating is disabled" do
           let!(:component) { create(:proposal_component, participatory_space: participatory_process) }
 
-          it "returns nil" do
-            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You are not authorized to access this mutation")
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
       end
