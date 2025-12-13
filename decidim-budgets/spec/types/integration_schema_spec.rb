@@ -123,6 +123,12 @@ describe "Decidim::Api::QueryType" do
     }
   end
 
+  shared_examples "unauthorized Budget" do
+    it "throws Decidim::Api::Errors::UnauthorizedObjectError" do
+      expect { response }.to raise_error(Decidim::Api::Errors::UnauthorizedObjectError, "You cannot view or edit this Budget because you do not have permissions")
+    end
+  end
+
   describe "commentable" do
     let(:component_fragment) { nil }
 
@@ -320,16 +326,14 @@ describe "Decidim::Api::QueryType" do
         context "when the user is admin" do
           let!(:current_user) { create(:user, :admin, :confirmed, organization: current_organization) }
 
-          it "should not be visible" do
-            expect(response["participatoryProcess"]["components"].first[lookout_key]).to be_nil
-          end
+          it_behaves_like "unauthorized Budget"
         end
 
         context "when user is visitor" do
           let!(:current_user) { nil }
 
           it "should not be visible" do
-            expect(response["participatoryProcess"]["components"].first).to be_nil
+            expect(response["participatoryProcess"]["components"]).to be_empty
           end
         end
 
@@ -337,7 +341,7 @@ describe "Decidim::Api::QueryType" do
           let!(:current_user) { create(:user, :confirmed, organization: current_organization) }
 
           it "should not be visible" do
-            expect(response["participatoryProcess"]["components"].first).to be_nil
+            expect(response["participatoryProcess"]["components"]).to be_empty
           end
         end
       end
@@ -352,9 +356,7 @@ describe "Decidim::Api::QueryType" do
         context "when the user is admin" do
           let!(:current_user) { create(:user, :admin, :confirmed, organization: current_organization) }
 
-          it "should not be visible" do
-            expect(response["participatoryProcess"]["components"].first[lookout_key]).to be_nil
-          end
+          it_behaves_like "unauthorized Budget"
         end
 
         context "when user is visitor" do
@@ -376,9 +378,7 @@ describe "Decidim::Api::QueryType" do
         context "when the user is admin" do
           let!(:current_user) { create(:user, :admin, :confirmed, organization: current_organization) }
 
-          it "should not be visible" do
-            expect(response["participatoryProcess"]["components"].first[lookout_key]).to be_nil
-          end
+          it_behaves_like "unauthorized Budget"
         end
 
         context "when user is visitor" do
@@ -475,8 +475,8 @@ describe "Decidim::Api::QueryType" do
         context "when user is visitor and requests projects that is not supposed to see" do
           let!(:current_user) { nil }
 
-          it "throws Decidim::Api::Errors::PermissionNotSetError" do
-            expect { response }.to raise_error(Decidim::Api::Errors::PermissionNotSetError, "Permission has not been set for this action")
+          it "throws Decidim::Api::Errors::UnauthorizedObjectError" do
+            expect { response }.to raise_error(Decidim::Api::Errors::UnauthorizedObjectError, "You cannot view or edit this Project because you do not have permissions")
           end
         end
 
@@ -504,9 +504,7 @@ describe "Decidim::Api::QueryType" do
         context "when the user is admin" do
           let!(:current_user) { create(:user, :admin, :confirmed, organization: current_organization) }
 
-          it "is visible" do
-            expect(response["assembly"]["components"].first[lookout_key]).to be_nil
-          end
+          it_behaves_like "unauthorized Budget"
         end
 
         %w(admin collaborator evaluator).each do |role|
@@ -515,7 +513,7 @@ describe "Decidim::Api::QueryType" do
             let!(:role) { create(:assembly_user_role, assembly: participatory_process, user: current_user, role:) }
 
             it "is visible" do
-              expect(response["assembly"]["components"].first[lookout_key]).to be_nil
+              expect(response["assembly"]["components"]).to be_empty
             end
           end
         end
@@ -524,7 +522,7 @@ describe "Decidim::Api::QueryType" do
           let!(:role) { create(:assembly_user_role, assembly: participatory_process, user: current_user, role: "moderator") }
 
           it "is visible" do
-            expect(response["assembly"]["components"].first).to be_nil
+            expect(response["assembly"]["components"]).to be_empty
           end
         end
 
@@ -532,7 +530,7 @@ describe "Decidim::Api::QueryType" do
           let!(:current_user) { nil }
 
           it "should not be visible" do
-            expect(response["assembly"]["components"].first).to be_nil
+            expect(response["assembly"]["components"]).to be_empty
           end
 
           context "when user is member" do
@@ -540,7 +538,7 @@ describe "Decidim::Api::QueryType" do
             let!(:participatory_space_private_user) { create(:assembly_private_user, user: current_user, privatable_to: participatory_process) }
 
             it "should not be visible" do
-              expect(response["assembly"]["components"].first).to be_nil
+              expect(response["assembly"]["components"]).to be_empty
             end
           end
         end
@@ -549,7 +547,7 @@ describe "Decidim::Api::QueryType" do
           let!(:current_user) { create(:user, :confirmed, organization: current_organization) }
 
           it "should not be visible" do
-            expect(response["assembly"]["components"].first).to be_nil
+            expect(response["assembly"]["components"]).to be_empty
           end
         end
       end
@@ -564,9 +562,7 @@ describe "Decidim::Api::QueryType" do
         context "when the user is admin" do
           let!(:current_user) { create(:user, :admin, :confirmed, organization: current_organization) }
 
-          it "should not be visible" do
-            expect(response["participatoryProcess"]["components"].first[lookout_key]).to be_nil
-          end
+          it_behaves_like "unauthorized Budget"
         end
 
         context "when user is visitor" do
@@ -588,9 +584,7 @@ describe "Decidim::Api::QueryType" do
         context "when the user is admin" do
           let!(:current_user) { create(:user, :admin, :confirmed, organization: current_organization) }
 
-          it "should not be visible" do
-            expect(response["participatoryProcess"]["components"].first[lookout_key]).to be_nil
-          end
+          it_behaves_like "unauthorized Budget"
         end
 
         context "when user is visitor" do

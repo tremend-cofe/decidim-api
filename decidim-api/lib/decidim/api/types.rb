@@ -12,6 +12,8 @@ module Decidim
     module Errors
       autoload :PermissionNotSetError, "decidim/api/errors/permission_not_set_error"
       autoload :NotFoundError, "decidim/api/errors/not_found_error"
+      autoload :UnauthorizedFieldError, "decidim/api/errors/unauthorized_field_error"
+      autoload :UnauthorizedObjectError, "decidim/api/errors/unauthorized_object_error"
     end
 
     module Types
