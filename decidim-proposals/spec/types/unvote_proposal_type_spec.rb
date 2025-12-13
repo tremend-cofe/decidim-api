@@ -21,12 +21,19 @@ module Decidim
       let(:query) do
         <<~GRAPHQL
           mutation {
-            unvote {
+            unvote(input: {}) {
               id
               voteCount
             }
           }
         GRAPHQL
+      end
+      let(:variables) do
+        {
+          input: {
+            attributes: {}
+          }
+        }
       end
 
       context "with a normal user" do
@@ -86,8 +93,8 @@ module Decidim
       context "with an unauthenticated user" do
         let(:current_user) { nil }
 
-        it "returns nil" do
-          expect(response["unvote"]).to be_nil
+        it "raises a Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+          expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
         end
       end
     end

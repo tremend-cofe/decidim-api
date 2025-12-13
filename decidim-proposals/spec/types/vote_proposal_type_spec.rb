@@ -21,12 +21,20 @@ module Decidim
       let(:query) do
         <<~GRAPHQL
           mutation {
-            vote {
+            vote(input: {}) {
               id
               voteCount
             }
           }
         GRAPHQL
+      end
+
+      let(:variables) do
+        {
+          input: {
+            attributes: {}
+          }
+        }
       end
 
       context "with a normal user" do
@@ -53,13 +61,11 @@ module Decidim
           end
 
           it "does not create a duplicate vote" do
-            expect do
-              response
-            end.not_to change(ProposalVote, :count)
+            expect { response }.not_to change(ProposalVote, :count)
           end
 
-          it "returns an error" do
-            expect(response["vote"]).to be_nil
+          it "raises a Decidim::Api::Errors::ValidationError exception" do
+            expect { response }.to raise_error(Decidim::Api::Errors::ValidationError, "There was a problem voting the proposal.")
           end
         end
 
@@ -70,19 +76,19 @@ module Decidim
                    participatory_space: participatory_process)
           end
 
-          it "does not vote the proposal" do
-            expect(response["vote"]).to be_nil
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
 
         context "when the proposal has reached maximum votes" do
           before do
-            allow_any_instance_of(Proposal).to receive(:maximum_votes_reached?).and_return(true)
-            allow_any_instance_of(Proposal).to receive(:can_accumulate_votes_beyond_threshold).and_return(false)
+            allow(model).to receive(:maximum_votes_reached?).and_return(true)
+            allow(model).to receive(:can_accumulate_votes_beyond_threshold).and_return(false)
           end
 
-          it "does not vote the proposal" do
-            expect(response["vote"]).to be_nil
+          it "raises a Decidim::Api::Errors::ValidationError exception" do
+            expect { response }.to raise_error(Decidim::Api::Errors::ValidationError, "There was a problem voting the proposal.")
           end
         end
       end
@@ -90,8 +96,8 @@ module Decidim
       context "with an unauthenticated user" do
         let(:current_user) { nil }
 
-        it "returns nil" do
-          expect(response["vote"]).to be_nil
+        it "raises a Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+          expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
         end
       end
     end

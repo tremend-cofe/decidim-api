@@ -14,23 +14,15 @@ module Decidim
             return object.reload
           end
           on(:invalid) do
-            return GraphQL::ExecutionError.new(
-              I18n.t("proposal_votes.create.error", scope: "decidim.proposals")
-            )
+            raise Decidim::Api::Errors::ValidationError, I18n.t("proposal_votes.create.error", scope: "decidim.proposals")
           end
         end
-
-        GraphQL::ExecutionError.new(
-          I18n.t("proposal_votes.create.error", scope: "decidim.proposals")
-        )
       end
 
       def authorized?
-        super && allowed_to?(:vote, :proposal, object, context)
-      end
+        raise Decidim::Api::Errors::MutationNotAuthorizedError, I18n.t("decidim.api.errors.unauthorized_mutation") unless super && allowed_to?(:vote, :proposal, object, context)
 
-      def current_user
-        context[:current_user]
+        true
       end
     end
   end

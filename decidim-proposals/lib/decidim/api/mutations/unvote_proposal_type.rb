@@ -14,19 +14,12 @@ module Decidim
             return object.reload
           end
         end
-
-        # This should never be reached as UnvoteProposal always broadcasts :ok
-        GraphQL::ExecutionError.new(
-          I18n.t("proposal_votes.destroy.error", scope: "decidim.proposals")
-        )
       end
 
       def authorized?
-        super && allowed_to?(:unvote, :proposal, object, context)
-      end
+        raise Decidim::Api::Errors::MutationNotAuthorizedError, I18n.t("decidim.api.errors.unauthorized_mutation") unless super && allowed_to?(:unvote, :proposal, object, context)
 
-      def current_user
-        context[:current_user]
+        true
       end
     end
   end

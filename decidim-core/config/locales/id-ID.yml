@@ -450,7 +450,6 @@ id:
     managed_users:
       expired_session: Sesi peniruan saat ini telah kedaluwarsa.
     menu:
-      help: Membantu
       home: Rumah
     messaging:
       conversation_mailer:
@@ -515,12 +514,9 @@ id:
           proposals_explanation: Buat proposal, dukung yang sudah ada dan promosikan perubahan yang ingin Anda lihat.
         footer_sub_hero:
           footer_sub_hero_headline: Selamat datang di %{organization} platform partisipatif.
-          register: Daftar
         hero:
           participate: Ikut
           welcome: Selamat datang di %{organization}!
-        sub_hero:
-          register: Daftar
       index:
         standalone_pages: Halaman
         subheading: Menavigasi melalui halaman bantuan %{name}
@@ -738,7 +734,6 @@ id:
     fallback: tidak valid
     name_included_in_password: terlalu mirip dengan nama Anda
     not_enough_unique_characters: tidak memiliki karakter unik yang cukup
-    password_not_allowed: tidak diizinkan
     password_too_common: terlalu umum
     password_too_long: terlalu panjang
     password_too_short: terlalu pendek
