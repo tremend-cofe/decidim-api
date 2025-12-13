@@ -13,8 +13,8 @@ module Decidim
 
       let(:current_organization) { create(:organization, available_locales: [:en]) }
       let(:organization) { current_organization }
-      let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
-      let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
+      let(:participatory_process) { create(:participatory_process, :published, :with_steps, organization:) }
+      let!(:component) { create(:proposal_component, :published, :with_creation_enabled, participatory_space: participatory_process) }
 
       let(:root_taxonomy) { create(:taxonomy, organization:) }
       let!(:taxonomy) { create(:taxonomy, parent: root_taxonomy, organization:) }
@@ -74,8 +74,8 @@ module Decidim
         context "when the user is not logged in" do
           let(:current_user) { nil }
 
-          it "returns nil" do
-            expect { response }.to raise_error(StandardError, "You cannot view createProposal field on CreateProposal because you do not have permission")
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
 
@@ -83,6 +83,7 @@ module Decidim
           context "with creation enabled" do
             let!(:component) do
               create(:proposal_component,
+                     :published,
                      :with_creation_enabled,
                      participatory_space: participatory_process,
                      settings: {
@@ -104,6 +105,7 @@ module Decidim
               let!(:component) do
                 create(:proposal_component,
                        :with_creation_enabled,
+                       :published,
                        participatory_space: participatory_process,
                        settings: {
                          geocoding_enabled: true,
@@ -177,7 +179,7 @@ module Decidim
               let(:title) { "" }
 
               it "raises an error" do
-                expect { response }.to raise_error(StandardError, /too short/)
+                expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
               end
             end
 
@@ -185,7 +187,7 @@ module Decidim
               let(:title) { "Short" }
 
               it "raises an error" do
-                expect { response }.to raise_error(StandardError, /too short/)
+                expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
               end
             end
           end
@@ -194,7 +196,7 @@ module Decidim
             let(:body) { "Short" }
 
             it "raises an error" do
-              expect { response }.to raise_error(StandardError, /too short/)
+              expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
             end
           end
         end
@@ -202,8 +204,8 @@ module Decidim
         context "when the creating is disabled" do
           let!(:component) { create(:proposal_component, participatory_space: participatory_process) }
 
-          it "returns nil" do
-            expect { response }.to raise_error(StandardError, "You cannot view createProposal field on CreateProposal because you do not have permission")
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
       end

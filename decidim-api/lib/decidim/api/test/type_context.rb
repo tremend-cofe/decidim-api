@@ -28,6 +28,29 @@ shared_context "with a graphql class type" do
     execute_query query, variables.stringify_keys
   end
 
+  def raise_proper_error(error)
+    code = error.dig("extensions", "code")
+
+    case code
+    when "ATTRIBUTE_VALIDATION_ERROR"
+      raise Decidim::Api::Errors::AttributeValidationError, error["message"]
+    when "VALIDATION_ERROR"
+      raise Decidim::Api::Errors::ValidationError, error["message"]
+    when "MUTATION_NOT_AUTHORIZED"
+      raise Decidim::Api::Errors::MutationNotAuthorizedError, error["message"]
+    when "NO_PERMISSION_SET"
+      raise Decidim::Api::Errors::PermissionNotSetError, error["message"]
+    when "NOT_FOUND"
+      raise Decidim::Api::Errors::NotFoundError, error["message"]
+    when "NO_FIELD_PERMISSION"
+      raise Decidim::Api::Errors::UnauthorizedFieldError, error["message"]
+    when "NO_OBJECT_PERMISSION"
+      raise Decidim::Api::Errors::UnauthorizedObjectError, error["message"]
+    else
+      raise StandardError, error["message"]
+    end
+  end
+
   def execute_query(query, variables)
     result = schema.execute(
       query,
@@ -41,7 +64,7 @@ shared_context "with a graphql class type" do
       variables:
     )
 
-    raise StandardError, result["errors"].map { |e| e["message"] }.join(", ") if result["errors"]
+    raise_proper_error(result["errors"].first) if result["errors"]
 
     result["data"]
   end
