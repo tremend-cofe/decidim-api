@@ -44,6 +44,10 @@ module Decidim
         deleted_at.present?
       end
 
+      def ephemeral?
+        false
+      end
+
       # Public: whether the user has been officialized or not
       def officialized?
         !officialized_at.nil?
