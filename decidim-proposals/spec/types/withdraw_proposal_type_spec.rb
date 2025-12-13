@@ -102,7 +102,7 @@ module Decidim
         end
 
         it "does not withdraw the proposal and returns an error" do
-          expect { response }.to raise_error(StandardError)
+          expect { response }.to raise_error(Decidim::Api::Errors::ValidationError, "This proposal cannot be withdrawn because it already has votes.")
           expect(model.reload).not_to be_withdrawn
           expect(model.withdrawn_at).not_to be_present
         end
