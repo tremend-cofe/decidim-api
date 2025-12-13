@@ -13,16 +13,18 @@ module Decidim
           on(:ok) do |proposal|
             return proposal
           end
+
           on(:has_votes) do
-            raise GraphQL::ExecutionError.new(
-              I18n.t("proposals.withdraw.errors.has_votes", scope: "decidim")
-            )
+            raise Decidim::Api::Errors::ValidationError, I18n.t("proposals.withdraw.errors.has_votes", scope: "decidim")
           end
         end
       end
 
       def authorized?
-        super && allowed_to?(:withdraw, :proposal, object, context)
+        raise Decidim::Api::Errors::MutationNotAuthorizedError, I18n.t("decidim.api.errors.unauthorized_mutation") unless super && allowed_to?(:withdraw, :proposal, object,
+                                                                                                                                               context)
+
+        true
       end
     end
   end

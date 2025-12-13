@@ -15,11 +15,6 @@ module Decidim
       let(:author) { create(:user, :confirmed, organization:) }
       let!(:model) { create(:proposal, component: proposal_component, users: [author]) }
       let(:component) { model.component }
-      let(:variables) do
-        {
-          input: {} # WithdrawProposal doesn't require any attributes, only the proposal object
-        }
-      end
       let(:query) do
         <<~GRAPHQL
           mutation() {
@@ -50,27 +45,37 @@ module Decidim
             expect(model.reload).to be_withdrawn
             expect(model.withdrawn_at).to be_present
           end
+
+          context "when has some votes" do
+            before do
+              model.votes.create!(author: current_user)
+            end
+
+            it "raises a Decidim::Api::Errors::ValidationError, exception" do
+              expect { response }.to raise_error(Decidim::Api::Errors::ValidationError, "This proposal cannot be withdrawn because it already has votes.")
+            end
+          end
         end
 
         context "with admin user" do
           let!(:user_type) { :admin }
 
-          it "returns nil because admin is not the author" do
-            expect(response["withdraw"]).to be_nil
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
 
         context "with api_user that is not the author" do
           let!(:user_type) { :api_user }
 
-          it "returns nil because api_user is not the author" do
-            expect(response["withdraw"]).to be_nil
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
 
         context "with normal user that is not the author" do
-          it "returns nil" do
-            expect(response["withdraw"]).to be_nil
+          it "raises a Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+            expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
           end
         end
 
