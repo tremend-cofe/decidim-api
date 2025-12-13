@@ -26,6 +26,7 @@ module Decidim
           longitude:,
           taxonomies:
         }
+
         params[:taxonomies] = Decidim::Taxonomy.where(id: params[:taxonomies]).pluck(:id) if params[:taxonomies]
 
         form = Decidim::Proposals::ProposalForm.from_params(
@@ -42,13 +43,15 @@ module Decidim
             return proposal
           end
           on(:invalid) do
-            raise GraphQL::ExecutionError.new(form.errors.full_messages.join(", "))
+            raise Decidim::Api::Errors::AttributeValidationError, form.errors
           end
         end
       end
 
       def authorized?(attributes:)
-        super && allowed_to?(:edit, :proposal, object, context)
+        raise Decidim::Api::Errors::MutationNotAuthorizedError, I18n.t("decidim.api.errors.unauthorized_mutation") unless super && allowed_to?(:edit, :proposal, object, context)
+
+        true
       end
     end
   end
