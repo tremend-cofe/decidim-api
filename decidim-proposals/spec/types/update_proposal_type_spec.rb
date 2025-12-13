@@ -49,19 +49,55 @@ module Decidim
         it_behaves_like "update proposal mutation examples" do
           let!(:user_type) { :user }
         end
+
+        context "with invalid attributes" do
+          context "with invalid title" do
+            context "when is missing" do
+              let(:new_title) { "" }
+
+              it "raises an error" do
+                expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
+              end
+            end
+
+            context "when is too short" do
+              let(:new_title) { "Short" }
+
+              it "raises an error" do
+                expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
+              end
+            end
+
+            context "when is all small" do
+              let(:new_title) { "Updated proposal title for testing".downcase }
+
+              it "raises an error" do
+                expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /must start with a capital letter/)
+              end
+            end
+          end
+
+          context "with invalid body" do
+            let(:new_body) { "Short" }
+
+            it "raises an error" do
+              expect { response }.to raise_error(Decidim::Api::Errors::AttributeValidationError, /too short/)
+            end
+          end
+        end
       end
 
       context "with admin user" do
         let!(:user_type) { :admin }
 
-        it "does not update the proposal" do
-          expect(response["updateProposal"]).to be_nil
+        it "raises an Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+          expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
         end
       end
 
       context "with normal user (not author)" do
         it "returns nil" do
-          expect(response["updateProposal"]).to be_nil
+          expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
         end
       end
 

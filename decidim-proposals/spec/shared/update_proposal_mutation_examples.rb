@@ -4,8 +4,8 @@ shared_examples "update proposal mutation examples" do
   context "when user is not authorized" do
     let!(:current_user) { nil }
 
-    it "does not update the proposal" do
-      expect(response["updateProposal"]).to be_nil
+    it "raises a Decidim::Api::Errors::MutationNotAuthorizedError exception" do
+      expect { response }.to raise_error(Decidim::Api::Errors::MutationNotAuthorizedError, "You do not have permission to perform this mutation")
     end
   end
 

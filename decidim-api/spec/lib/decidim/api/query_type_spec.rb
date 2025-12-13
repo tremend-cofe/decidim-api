@@ -4,8 +4,8 @@ require "spec_helper"
 require "decidim/api/test"
 
 module Decidim
-  module Core
-    describe Decidim::Api::QueryType do
+  module Api
+    describe QueryType do
       include_context "with a graphql class type"
 
       describe "component" do
@@ -222,7 +222,7 @@ module Decidim
               "id" => model.topic.id.to_s
             },
             "updatedAt" => model.updated_at.to_time.iso8601,
-            "url" => Decidim::EngineRouter.new("decidim", { host: current_organization.host }).page_url(model.reload)
+            "url" => Decidim::EngineRouter.new("decidim", { host: current_organization.host }).page_url(model.reload, locale: I18n.locale)
           )
         end
       end
