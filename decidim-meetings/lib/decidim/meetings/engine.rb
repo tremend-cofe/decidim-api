@@ -79,6 +79,12 @@ module Decidim
         Decidim::MutationRegistry.instance.register(
           Decidim::Meetings::MeetingsMutationType
         )
+      end 
+      
+      initializer "decidim_meetings.data_migrate", after: "decidim_core.data_migrate" do
+        DataMigrate.configure do |config|
+          config.data_migrations_path << root.join("db/data").to_s
+        end
       end
 
       initializer "decidim_meetings.content_processors" do |_app|
